@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+import 'package:ecommerce_app/core/constant/color.dart';
+import 'package:ecommerce_app/data/datasource/static/static.dart';
+
+class OnBoardingButtons extends StatelessWidget {
+  final int currentPage;
+  final VoidCallback onNext;
+  final VoidCallback onSkip;
+
+  const OnBoardingButtons({
+    // convert to super parameteres ??
+    super.key,
+    required this.currentPage,
+    required this.onNext,
+    required this.onSkip,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // Continue Button
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: onNext,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: ColorApp.primaryColor,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: Text(
+              currentPage == onBoardingList.length - 1 ? "Start" : "Continue",
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+
+        // Skip Button
+        SizedBox(
+          width: double.infinity,
+          child: TextButton(
+            onPressed: onSkip,
+            child: const Text(
+              "Skip",
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
