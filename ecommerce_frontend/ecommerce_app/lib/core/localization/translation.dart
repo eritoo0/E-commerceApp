@@ -13,7 +13,11 @@ class MyTranslation extends Translations {
           "signup": "Sign Up",
           "email": "Email",
           "password": "Password",
+          'email_hint': 'Enter your email',
+          'password_hint': 'Enter your password',
           "confirm_password": "Confirm Password",
+          'remember_me': 'Remember me',
+          'forgot_password': 'Forgot password?',
           "name": "Name",
           "logout": "Logout",
           "language": "Language",
@@ -29,6 +33,8 @@ class MyTranslation extends Translations {
           'onboarding_title_4': 'Fast Delivery',
           'onboarding_body_4':
               'Enjoy fast and reliable delivery.\nYour products will reach your door\nquickly and safely.',
+          'login_sentence':
+              'Sign in with your email and password, or continue with social media.',
         },
         "fr": {
           "Choose Language": "Choisir la langue",
@@ -40,7 +46,11 @@ class MyTranslation extends Translations {
           "signup": "S'inscrire",
           "email": "E-mail",
           "password": "Mot de passe",
+          'email_hint': 'Entrez votre e-mail',
+          'password_hint': 'Entrez votre mot de passe',
           "confirm_password": "Confirmer le mot de passe",
+          'remember_me': 'Se souvenir de moi',
+          'forgot_password': 'Mot de passe oublié ?',
           "name": "Nom",
           "logout": "Se déconnecter",
           "language": "Langue",
@@ -56,6 +66,8 @@ class MyTranslation extends Translations {
           'onboarding_title_4': 'Livraison rapide',
           'onboarding_body_4':
               'Profitez d\'une livraison rapide et fiable.\nVos produits arriveront rapidement et en toute sécurité.',
+          'login_sentence':
+              'Connectez-vous avec votre e-mail et mot de passe, ou continuez avec les réseaux sociaux.',
         },
         "ar": {
           "Choose Language": "اختر اللغة",
@@ -67,7 +79,11 @@ class MyTranslation extends Translations {
           "signup": "إنشاء حساب",
           "email": "البريد الإلكتروني",
           "password": "كلمة المرور",
+          'email_hint': 'أدخل بريدك الإلكتروني',
+          'password_hint': 'أدخل كلمة المرور',
           "confirm_password": "تأكيد كلمة المرور",
+          'remember_me': 'تذكرني',
+          'forgot_password': 'هل نسيت كلمة المرور؟',
           "name": "الاسم",
           "logout": "تسجيل الخروج",
           "language": "اللغة",
@@ -83,6 +99,8 @@ class MyTranslation extends Translations {
           'onboarding_title_4': 'توصيل سريع',
           'onboarding_body_4':
               'استمتع بتوصيل سريع وآمن.\nمنتجاتك ستصل إلى بابك بسرعة وأمان.',
+          'login_sentence':
+              'سجّل الدخول باستخدام بريدك الإلكتروني وكلمة المرور، أو تابع عبر وسائل التواصل الاجتماعي.',
         },
       };
 }
