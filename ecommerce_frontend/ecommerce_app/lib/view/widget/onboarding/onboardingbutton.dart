@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:ecommerce_app/data/datasource/static/static.dart';
+import 'package:get/get.dart';
 
 class OnBoardingButtons extends StatelessWidget {
   final int currentPage;
@@ -33,8 +34,11 @@ class OnBoardingButtons extends StatelessWidget {
               ),
             ),
             child: Text(
-              currentPage == onBoardingList.length - 1 ? "Start" : "Continue",
-              style: const TextStyle(fontSize: 16),
+              currentPage == onBoardingList.length - 1 ? "start".tr : "next".tr,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: Colors.white),
             ),
           ),
         ),
@@ -45,12 +49,12 @@ class OnBoardingButtons extends StatelessWidget {
           width: double.infinity,
           child: TextButton(
             onPressed: onSkip,
-            child: const Text(
-              "Skip",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-              ),
+            child: Text(
+              "skip".tr,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: Colors.white),
             ),
           ),
         ),

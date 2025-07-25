@@ -1,8 +1,11 @@
 import 'package:ecommerce_app/core/constant/color.dart';
+import 'package:ecommerce_app/core/constant/routes.dart';
+import 'package:ecommerce_app/core/localization/change_local.dart';
 import 'package:ecommerce_app/view/widget/language/language_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class Language extends StatelessWidget {
+class Language extends GetView<LocalController> {
   const Language({super.key});
 
   @override
@@ -27,24 +30,39 @@ class Language extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "Choose Language",
+              "Choose Language".tr,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(
               height: 60,
             ),
-            const LanguageButton(
-                label: "English 🇬🇧", locale: Locale("en", "US")),
+            LanguageButton(
+              label: "English 🇬🇧",
+              onPressed: () {
+                controller.changeLang("en");
+                Get.toNamed(AppRoute.onBoarding);
+              },
+            ),
             const SizedBox(
               height: 20,
             ),
-            const LanguageButton(
-                label: "Français 🇫🇷", locale: Locale("fr", "FR")),
+            LanguageButton(
+              label: "Français 🇫🇷",
+              onPressed: () {
+                controller.changeLang("fr");
+                Get.toNamed(AppRoute.onBoarding);
+              },
+            ),
             const SizedBox(
               height: 20,
             ),
-            const LanguageButton(
-                label: "العربية 🇩🇿", locale: Locale("ar", "DZ")),
+            LanguageButton(
+              label: "العربية 🇩🇿",
+              onPressed: () {
+                controller.changeLang("ar");
+                Get.toNamed(AppRoute.onBoarding);
+              },
+            ),
           ],
         ),
       ),

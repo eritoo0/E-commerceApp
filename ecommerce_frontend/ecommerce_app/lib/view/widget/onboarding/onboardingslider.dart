@@ -17,7 +17,7 @@ class SliderPage extends StatelessWidget {
       itemBuilder: (context, i) => Column(
         children: [
           Text(
-            onBoardingList[i].title!,
+            onBoardingList[i].title!.tr,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: 80),
@@ -32,7 +32,7 @@ class SliderPage extends StatelessWidget {
             width: double.infinity,
             alignment: Alignment.center,
             child: Text(
-              onBoardingList[i].body!,
+              onBoardingList[i].body!.tr,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
