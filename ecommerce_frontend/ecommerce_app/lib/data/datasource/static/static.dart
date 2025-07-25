@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/core/constant/imageAsset.dart';
+import 'package:ecommerce_app/core/constant/image_asset.dart';
 import 'package:ecommerce_app/data/model/onboardingmodel.dart';
 
 List<OnBoardingmMdel> onBoardingList = [
