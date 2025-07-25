@@ -26,6 +26,7 @@ class OnBoardingButtons extends StatelessWidget {
             onPressed: onNext,
             style: ElevatedButton.styleFrom(
               backgroundColor: ColorApp.primaryColor,
+              foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -46,7 +47,10 @@ class OnBoardingButtons extends StatelessWidget {
             onPressed: onSkip,
             child: const Text(
               "Skip",
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
             ),
           ),
         ),

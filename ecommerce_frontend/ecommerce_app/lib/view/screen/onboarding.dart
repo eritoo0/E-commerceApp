@@ -17,38 +17,52 @@ class OnBoarding extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorApp.bgColor,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              const Expanded(
-                flex: 3,
-                child: SliderPage(), // PageView.builder is inside here
-              ),
-              Expanded(
-                flex: 1,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: GetBuilder<OnBoardingController>(
-                    builder: (controller) => Column(
-                      children: [
-                        DotsIndicator(
-                          currentPage: controller.currentPage,
-                          totalDots: onBoardingList.length,
-                        ),
-                        const Spacer(),
-                        OnBoardingButtons(
-                          currentPage: controller.currentPage,
-                          onNext: controller.nextPage,
-                          onSkip: controller.skip,
-                        ),
-                      ],
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                ColorApp.bgColorLangBeg,
+                ColorApp.bgColorLangEnd,
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                const Expanded(
+                  flex: 3,
+                  child: SliderPage(), // PageView.builder is inside here
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: GetBuilder<OnBoardingController>(
+                      builder: (controller) => Column(
+                        children: [
+                          DotsIndicator(
+                            currentPage: controller.currentPage,
+                            totalDots: onBoardingList.length,
+                          ),
+                          const Spacer(),
+                          OnBoardingButtons(
+                            currentPage: controller.currentPage,
+                            onNext: controller.nextPage,
+                            onSkip: controller.skip,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
