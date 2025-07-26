@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,9 +26,15 @@ class LoginFields extends StatelessWidget {
           controller: emailController,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
             labelText: 'email'.tr,
-            hintText: 'Enter your email',
+            labelStyle: Theme.of(context).textTheme.bodySmall,
+            hintText: 'email_hint'.tr,
+            hintStyle: Theme.of(context).textTheme.bodySmall,
             prefixIcon: const Icon(Icons.email_outlined),
+            prefixIconColor: ColorApp.iconColor,
             border: roundedBorder,
             enabledBorder: roundedBorder,
             focusedBorder: roundedBorder,
@@ -40,10 +47,16 @@ class LoginFields extends StatelessWidget {
           controller: passwordController,
           obscureText: true,
           decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
             labelText: 'password'.tr,
-            hintText: 'Enter your password',
+            labelStyle: Theme.of(context).textTheme.bodySmall,
+            hintText: 'password_hint'.tr,
+            hintStyle: Theme.of(context).textTheme.bodySmall,
             prefixIcon: const Icon(Icons.lock_outline),
             border: roundedBorder,
+            prefixIconColor: ColorApp.iconColor,
             enabledBorder: roundedBorder,
             focusedBorder: roundedBorder,
           ),

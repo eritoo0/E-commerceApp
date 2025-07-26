@@ -28,6 +28,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
           textTheme: const TextTheme(
+        headlineLarge: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
+            color: ColorApp.titleFont),
         headlineMedium: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -36,6 +40,11 @@ class MyApp extends StatelessWidget {
             height: 2,
             color: ColorApp.bodyFont,
             fontWeight: FontWeight.w600,
+            fontSize: 16),
+        bodySmall: TextStyle(
+            height: 2,
+            color: ColorApp.loginFont,
+            fontWeight: FontWeight.w300,
             fontSize: 16),
       )),
       home: const Language(),
