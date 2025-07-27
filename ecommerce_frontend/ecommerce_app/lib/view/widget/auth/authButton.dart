@@ -1,10 +1,10 @@
 import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:flutter/material.dart';
 
-class LoginButton extends StatelessWidget {
+class AuthButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
-  const LoginButton({super.key, required this.label, required this.onPressed});
+  const AuthButton({super.key, required this.label, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
