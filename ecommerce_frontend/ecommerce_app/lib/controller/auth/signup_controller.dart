@@ -14,7 +14,6 @@ class SignUpControllerImplement extends SignUpController {
   late TextEditingController passwordController;
   @override
   signUp() {
-    // TODO: implement login
     throw UnimplementedError();
   }
 

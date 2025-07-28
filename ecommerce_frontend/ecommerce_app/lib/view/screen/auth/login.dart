@@ -7,7 +7,7 @@ import 'package:ecommerce_app/view/widget/auth/social_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
-import 'package:ecommerce_app/view/widget/auth/authButton.dart';
+import 'package:ecommerce_app/view/widget/auth/authbutton.dart';
 import 'package:ecommerce_app/view/widget/auth/loginform.dart';
 
 class Login extends StatelessWidget {
@@ -15,7 +15,7 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LoginControllerImplement());
+    LoginControllerImplement controller = Get.put(LoginControllerImplement());
 
     return Scaffold(
       backgroundColor: ColorApp.bgColor,
@@ -47,7 +47,9 @@ class Login extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  controller.goToForgetPassword();
+                },
                 child: Text(
                   'forgot_password'.tr,
                   style: Theme.of(context)

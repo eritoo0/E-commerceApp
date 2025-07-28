@@ -8,14 +8,14 @@ import 'package:ecommerce_app/view/widget/auth/social_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
-import 'package:ecommerce_app/view/widget/auth/authButton.dart';
+import 'package:ecommerce_app/view/widget/auth/authbutton.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SignUpControllerImplement());
+    SignUpControllerImplement controller = Get.put(SignUpControllerImplement());
 
     return Scaffold(
       backgroundColor: ColorApp.bgColor,
@@ -24,7 +24,7 @@ class SignUp extends StatelessWidget {
         backgroundColor: ColorApp.bgColor,
         elevation: 0,
         title: Text(
-          "login".tr,
+          "signup".tr,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
       ),
@@ -48,7 +48,7 @@ class SignUp extends StatelessWidget {
 
             const SizedBox(height: 20),
             AuthButton(
-              label: "Signup".tr,
+              label: "signup".tr,
               onPressed: () {},
             ),
             const SizedBox(height: 40),

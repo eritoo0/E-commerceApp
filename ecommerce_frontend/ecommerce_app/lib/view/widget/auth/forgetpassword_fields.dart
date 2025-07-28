@@ -2,14 +2,12 @@ import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginFields extends StatelessWidget {
+class ForgetpasswordFields extends StatelessWidget {
   final TextEditingController emailController;
-  final TextEditingController passwordController;
 
-  const LoginFields({
+  const ForgetpasswordFields({
     super.key,
     required this.emailController,
-    required this.passwordController,
   });
 
   @override
@@ -47,33 +45,6 @@ class LoginFields extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20),
-
-        // Password Field
-        TextFormField(
-          controller: passwordController,
-          obscureText: true,
-          validator: (value) {
-            if (value == null || value.isEmpty) return 'required'.tr;
-            final passwordReg =
-                RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$');
-            if (!passwordReg.hasMatch(value)) return 'password_not_valid'.tr;
-            return null;
-          },
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            labelText: 'password'.tr,
-            labelStyle: Theme.of(context).textTheme.bodySmall,
-            hintText: 'password_hint'.tr,
-            hintStyle: Theme.of(context).textTheme.bodySmall,
-            prefixIcon: const Icon(Icons.lock_outline),
-            border: roundedBorder,
-            prefixIconColor: ColorApp.iconColor,
-            enabledBorder: roundedBorder,
-            focusedBorder: roundedBorder,
-          ),
-        ),
       ],
     );
   }

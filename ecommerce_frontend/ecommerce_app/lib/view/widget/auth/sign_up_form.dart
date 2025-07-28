@@ -26,8 +26,15 @@ class SignUpForm extends StatelessWidget {
 
     return Column(
       children: [
+        // Full Name
         TextFormField(
           controller: fullNameController,
+          validator: (value) {
+            if (value == null || value.isEmpty) return 'required'.tr;
+            final nameReg = RegExp(r'^[a-zA-Z\u0621-\u064A\s]{3,}$');
+            if (!nameReg.hasMatch(value)) return 'fullname_not_valid'.tr;
+            return null;
+          },
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
@@ -44,9 +51,17 @@ class SignUpForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20),
+
+        // Email
         TextFormField(
           controller: emailController,
           keyboardType: TextInputType.emailAddress,
+          validator: (value) {
+            if (value == null || value.isEmpty) return 'required'.tr;
+            final emailReg = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+            if (!emailReg.hasMatch(value)) return 'email_not_valid'.tr;
+            return null;
+          },
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
@@ -63,12 +78,18 @@ class SignUpForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20),
+
+        // Phone
         TextFormField(
           controller: phoneController,
           keyboardType: TextInputType.phone,
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-          ],
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          validator: (value) {
+            if (value == null || value.isEmpty) return 'required'.tr;
+            final phoneReg = RegExp(r'^[0-9]{8,15}$');
+            if (!phoneReg.hasMatch(value)) return 'phone_not_valid'.tr;
+            return null;
+          },
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
@@ -85,9 +106,18 @@ class SignUpForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20),
+
+        // Password
         TextFormField(
           controller: passwordController,
           obscureText: true,
+          validator: (value) {
+            if (value == null || value.isEmpty) return 'required'.tr;
+            final passwordReg =
+                RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$');
+            if (!passwordReg.hasMatch(value)) return 'password_not_valid'.tr;
+            return null;
+          },
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
