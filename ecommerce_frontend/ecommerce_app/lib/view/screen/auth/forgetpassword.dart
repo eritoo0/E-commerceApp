@@ -41,7 +41,9 @@ class Forgetpassword extends StatelessWidget {
             const SizedBox(height: 20),
             AuthButton(
               label: "check_email".tr,
-              onPressed: () {},
+              onPressed: () {
+                controller.goToVerifyCode();
+              },
             ),
           ],
         ),
