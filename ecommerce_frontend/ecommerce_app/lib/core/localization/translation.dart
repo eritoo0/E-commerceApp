@@ -61,6 +61,14 @@ class MyTranslation extends Translations {
               'Enjoy fast and reliable delivery.\nYour products will reach your door\nquickly and safely.',
           'login_sentence':
               'Sign in with your email and password, or continue with social media.',
+          'signup_success_title': 'Sign Up Successful!',
+          'signup_success_subtitle':
+              'Your account has been created successfully.',
+          'go_to_home': 'Go to Home',
+          'reset_success_title': 'Password Reset Successful!',
+          'reset_success_subtitle':
+              'Your password has been updated successfully.',
+          'go_to_login': 'Back to Login',
         },
         "fr": {
           "Choose Language": "Choisir la langue",
@@ -120,6 +128,13 @@ class MyTranslation extends Translations {
               'Profitez d\'une livraison rapide et fiable.\nVos produits arriveront rapidement et en toute sécurité.',
           'login_sentence':
               'Connectez-vous avec votre e-mail et mot de passe, ou continuez avec les réseaux sociaux.',
+          'signup_success_title': 'Inscription réussie !',
+          'signup_success_subtitle': 'Votre compte a été créé avec succès.',
+          'go_to_home': 'Aller à l\'accueil',
+          'reset_success_title': 'Réinitialisation réussie !',
+          'reset_success_subtitle':
+              'Votre mot de passe a été mis à jour avec succès.',
+          'go_to_login': 'Retour à la connexion',
         },
         "ar": {
           "Choose Language": "اختر اللغة",
@@ -179,6 +194,12 @@ class MyTranslation extends Translations {
               'استمتع بتوصيل سريع وآمن.\nمنتجاتك ستصل إلى بابك بسرعة وأمان.',
           'login_sentence':
               'سجّل الدخول باستخدام بريدك الإلكتروني وكلمة المرور، أو تابع عبر وسائل التواصل الاجتماعي.',
+          'signup_success_title': 'تم التسجيل بنجاح!',
+          'signup_success_subtitle': 'تم إنشاء حسابك بنجاح.',
+          'go_to_home': 'اذهب إلى الصفحة الرئيسية',
+          'reset_success_title': 'تمت إعادة تعيين كلمة السر!',
+          'reset_success_subtitle': 'تم تحديث كلمة المرور بنجاح.',
+          'go_to_login': 'العودة إلى تسجيل الدخول',
         },
       };
 }

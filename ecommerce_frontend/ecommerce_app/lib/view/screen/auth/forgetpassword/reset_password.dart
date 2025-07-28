@@ -1,7 +1,7 @@
-import 'package:ecommerce_app/controller/auth/resetpassword_controller.dart';
+import 'package:ecommerce_app/controller/auth/forgetpassword/resetpassword_controller.dart';
 import 'package:ecommerce_app/view/widget/auth/custom_body.dart';
 import 'package:ecommerce_app/view/widget/auth/custom_title.dart';
-import 'package:ecommerce_app/view/widget/auth/resetpassword_fields.dart';
+import 'package:ecommerce_app/view/widget/auth/forgetpassword/resetpassword_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
@@ -49,7 +49,7 @@ class ResetPassword extends StatelessWidget {
             AuthButton(
               label: "reset_pass".tr,
               onPressed: () {
-                controller.goToLogin();
+                controller.goToSuccessResetpass();
               },
             ),
           ],

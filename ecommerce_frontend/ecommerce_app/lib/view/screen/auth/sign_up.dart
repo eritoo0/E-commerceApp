@@ -49,7 +49,9 @@ class SignUp extends StatelessWidget {
             const SizedBox(height: 20),
             AuthButton(
               label: "signup".tr,
-              onPressed: () {},
+              onPressed: () {
+                controller.signUp();
+              },
             ),
             const SizedBox(height: 40),
             //  Social icons
@@ -60,7 +62,7 @@ class SignUp extends StatelessWidget {
                 txtOne: "have_an_account".tr,
                 txtTwo: "login".tr,
                 onPressed: () {
-                  controller.goToSignUp();
+                  controller.goToLogin();
                 })
           ],
         ),

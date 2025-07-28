@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/controller/auth/verifycode_controller.dart';
+import 'package:ecommerce_app/controller/auth/forgetpassword/verifycode_controller.dart';
 import 'package:ecommerce_app/view/widget/auth/custom_body.dart';
 import 'package:ecommerce_app/view/widget/auth/custom_title.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,7 @@ class VerifyCode extends StatelessWidget {
             const SizedBox(height: 24),
             OtpTextField(
               numberOfFields: 5,
-              borderColor: Color(0xFF512DA8),
+              borderColor: ColorApp.primaryColor,
               //set to true to show as box or false to show as dash
               showFieldAsBox: true,
               //runs when a code is typed in
