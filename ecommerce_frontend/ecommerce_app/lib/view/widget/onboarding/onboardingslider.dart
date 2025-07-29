@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_app/controller/onboarding_controller.dart';
@@ -18,7 +19,11 @@ class SliderPage extends StatelessWidget {
         children: [
           Text(
             onBoardingList[i].title!.tr,
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: const TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 22,
+              color: ColorApp.titleFont,
+            ),
           ),
           const SizedBox(height: 80),
           Image.asset(
@@ -34,7 +39,12 @@ class SliderPage extends StatelessWidget {
             child: Text(
               onBoardingList[i].body!.tr,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
+                height: 1.6,
+                color: ColorApp.bodyFont,
+              ),
             ),
           )
         ],
