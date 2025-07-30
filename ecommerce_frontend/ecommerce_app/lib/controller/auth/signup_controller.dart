@@ -14,7 +14,7 @@ class SignUpControllerImplement extends SignUpController {
   late TextEditingController passwordController;
   @override
   signUp() {
-    Get.offNamed(AppRoute.successSignUp);
+    Get.offNamed(AppRoute.checkEmail);
   }
 
   @override

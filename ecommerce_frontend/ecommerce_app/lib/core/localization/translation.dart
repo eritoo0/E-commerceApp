@@ -23,6 +23,9 @@ class MyTranslation extends Translations {
           "password": "Password",
           "forgetPassword": "Forget Password",
           "check_email": "Check Your Email",
+          'check_email_title': 'Email Verification',
+          'check_email_instruction':
+              'Please enter the email you used during registration to verify your account.',
           "check_email_sentence":
               "We are going to send you an email to reset your password.",
           "verifyCode": "Verify Code",
@@ -90,6 +93,9 @@ class MyTranslation extends Translations {
           "password": "Mot de passe",
           "forgetPassword": "Mot de passe oublié",
           "check_email": "Vérifiez votre e-mail",
+          'check_email_title': 'Vérification d\'email',
+          'check_email_instruction':
+              'Veuillez saisir l\'adresse e-mail utilisée lors de votre inscription pour vérifier votre compte.',
           "check_email_sentence":
               "Nous allons vous envoyer un e-mail pour réinitialiser votre mot de passe.",
           "verifyCode": "Vérifier le code",
@@ -158,6 +164,9 @@ class MyTranslation extends Translations {
           "check_email": "تحقق من بريدك الإلكتروني",
           "check_email_sentence":
               "سنرسل لك بريدًا إلكترونيًا لإعادة تعيين كلمة المرور.",
+          'check_email_title': 'تأكيد البريد الإلكتروني',
+          'check_email_instruction':
+              'يرجى إدخال البريد الإلكتروني الذي استخدمته أثناء التسجيل للتحقق من حسابك.',
           "verifyCode": "تأكيد الرمز",
           "check_code": "تحقق من الرمز",
           "check_code_sentence":

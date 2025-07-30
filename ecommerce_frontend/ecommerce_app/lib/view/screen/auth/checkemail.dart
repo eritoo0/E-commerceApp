@@ -22,7 +22,7 @@ class CheckEmail extends StatelessWidget {
         backgroundColor: ColorApp.bgColor,
         elevation: 0,
         title: Text(
-          "forgetPassword".tr,
+          "check_email_title".tr,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
       ),
@@ -33,7 +33,9 @@ class CheckEmail extends StatelessWidget {
           children: [
             CustomTitle(title: "check_email".tr),
             const SizedBox(height: 10),
-            CustomBody(bodyText: "check_email_sentence".tr),
+            CustomBody(
+              bodyText: "check_email_instruction".tr,
+            ),
             const SizedBox(height: 24),
             ForgetpasswordFields(
               emailController: controller.emailController,
@@ -42,7 +44,7 @@ class CheckEmail extends StatelessWidget {
             AuthButton(
               label: "check_email".tr,
               onPressed: () {
-                controller.goToSuccesSignUP();
+                controller.goToVerifyCodeSignUp();
               },
             ),
           ],
