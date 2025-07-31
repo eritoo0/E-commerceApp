@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/core/constant/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 abstract class LoginController extends GetxController {
@@ -11,14 +12,22 @@ abstract class LoginController extends GetxController {
 class LoginControllerImplement extends LoginController {
   late TextEditingController emailController;
   late TextEditingController passwordController;
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   login() {
-    throw UnimplementedError();
+    var formdata = formKey.currentState;
+    if (formdata!.validate()) {
+      print("validate");
+    } else {
+      print("Not Valide");
+    }
   }
 
   @override
   goToSignUp() {
-    Get.toNamed(AppRoute.signUp);
+    Get.offNamed(AppRoute.signUp);
   }
 
   @override

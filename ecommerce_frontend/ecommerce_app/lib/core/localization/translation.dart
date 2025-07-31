@@ -46,6 +46,13 @@ class MyTranslation extends Translations {
           "password_not_valid":
               "Password must be at least 6 characters, with numbers",
           "required": "This field is required",
+          'username_length':
+              'Username must be between {min} and {max} characters.',
+          'username_not_valid': 'Username is not valid.',
+          'password_length':
+              'Password must be between {min} and {max} characters.',
+          'password_too_short':
+              'Password must be at least {min} characters long.',
           'remember_me': 'Remember me',
           'forgot_password': 'Forgot password?',
           "logout": "Logout",
@@ -116,6 +123,13 @@ class MyTranslation extends Translations {
           "password_not_valid":
               "Le mot de passe doit contenir au moins 6 caractères avec des chiffres",
           "required": "Ce champ est requis",
+          'username_length':
+              'Le nom d\'utilisateur doit comporter entre {min} et {max} caractères.',
+          'username_not_valid': 'Le nom d\'utilisateur n\'est pas valide.',
+          'password_length':
+              'Le mot de passe doit comporter entre {min} et {max} caractères.',
+          'password_too_short':
+              'Le mot de passe doit comporter au moins {min} caractères.',
           'remember_me': 'Se souvenir de moi',
           'forgot_password': 'Mot de passe oublié ?',
           "logout": "Se déconnecter",
@@ -185,6 +199,13 @@ class MyTranslation extends Translations {
           "password_not_valid":
               "يجب أن تكون كلمة المرور 6 أحرف على الأقل وتحتوي على أرقام",
           "required": "هذا الحقل مطلوب",
+          'username_length':
+              'يجب أن يتراوح اسم المستخدم بين {min} و {max} حرفًا.',
+          'username_not_valid': 'اسم المستخدم غير صالح.',
+          'password_length':
+              'يجب أن يتراوح طول كلمة المرور بين {min} و {max} حرفًا.',
+          'password_too_short':
+              'يجب أن تكون كلمة المرور على الأقل {min} حرفًا.',
           'remember_me': 'تذكرني',
           'forgot_password': 'هل نسيت كلمة المرور؟',
           "logout": "تسجيل الخروج",

@@ -10,7 +10,8 @@ class CustomTextField extends StatelessWidget {
   final IconData icon;
   final TextInputType keyboardType;
   final List<TextInputFormatter>? inputFormatters;
-  final String Function(String?)? validator;
+  final String? Function(String?)? validator;
+
   final bool obscureText;
 
   const CustomTextField({
