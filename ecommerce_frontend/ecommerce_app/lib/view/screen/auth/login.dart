@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:ecommerce_app/view/widget/auth/authbutton.dart';
-import 'package:ecommerce_app/view/widget/auth/loginfields.dart';
+import 'package:ecommerce_app/view/widget/auth/login_form.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
