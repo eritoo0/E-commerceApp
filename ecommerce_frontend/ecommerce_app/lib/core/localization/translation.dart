@@ -79,6 +79,10 @@ class MyTranslation extends Translations {
           'reset_success_subtitle':
               'Your password has been updated successfully.',
           'go_to_login': 'Back to Login',
+          "exit_title": "Exit App",
+          "exit_message": "Are you sure you want to exit the application?",
+          "cancel": "Cancel",
+          "exit": "Exit",
         },
         "fr": {
           "Choose Language": "Choisir la langue",
@@ -155,6 +159,10 @@ class MyTranslation extends Translations {
           'reset_success_subtitle':
               'Votre mot de passe a été mis à jour avec succès.',
           'go_to_login': 'Retour à la connexion',
+          "exit_title": "Quitter l'application",
+          "exit_message": "Êtes-vous sûr de vouloir quitter l'application ?",
+          "cancel": "Annuler",
+          "exit": "Quitter"
         },
         "ar": {
           "Choose Language": "اختر اللغة",
@@ -230,6 +238,10 @@ class MyTranslation extends Translations {
           'reset_success_title': 'تمت إعادة تعيين كلمة السر!',
           'reset_success_subtitle': 'تم تحديث كلمة المرور بنجاح.',
           'go_to_login': 'العودة إلى تسجيل الدخول',
+          "exit_title": "الخروج من التطبيق",
+          "exit_message": "هل أنت متأكد أنك تريد الخروج من التطبيق؟",
+          "cancel": "إلغاء",
+          "exit": "خروج",
         },
       };
 }
