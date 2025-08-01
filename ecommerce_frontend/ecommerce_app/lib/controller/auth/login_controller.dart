@@ -12,6 +12,11 @@ abstract class LoginController extends GetxController {
 class LoginControllerImplement extends LoginController {
   late TextEditingController emailController;
   late TextEditingController passwordController;
+  bool isShowPass = true;
+  showPassword() {
+    isShowPass = isShowPass == true ? false : true;
+    update();
+  }
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 

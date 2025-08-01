@@ -12,6 +12,12 @@ class SignUpControllerImplement extends SignUpController {
   late TextEditingController phoneController;
   late TextEditingController emailController;
   late TextEditingController passwordController;
+  bool isShowPass = true;
+  showPassword() {
+    isShowPass = isShowPass == true ? false : true;
+    update();
+  }
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   signUp() {

@@ -7,23 +7,27 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
   final String hintText;
-  final IconData icon;
+  final IconData preIcon;
+  final IconData? suffIcon;
   final TextInputType keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
+  final void Function()? onTapIcon;
 
-  final bool obscureText;
+  final bool? obscureText;
 
   const CustomTextField({
     super.key,
     required this.controller,
     required this.labelText,
     required this.hintText,
-    required this.icon,
+    required this.preIcon,
     required this.keyboardType,
     this.inputFormatters,
     this.validator,
-    this.obscureText = false,
+    this.obscureText,
+    this.suffIcon,
+    this.onTapIcon,
   });
 
   @override
@@ -36,7 +40,7 @@ class CustomTextField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
-      obscureText: obscureText,
+      obscureText: obscureText == null || obscureText == false ? false : true,
       inputFormatters: inputFormatters,
       validator: validator,
       decoration: InputDecoration(
@@ -47,7 +51,16 @@ class CustomTextField extends StatelessWidget {
         hintText: hintText.tr,
         labelStyle: Theme.of(context).textTheme.bodySmall,
         hintStyle: Theme.of(context).textTheme.bodySmall,
-        prefixIcon: Icon(icon),
+        prefixIcon: Icon(preIcon),
+        suffixIcon: suffIcon != null
+            ? InkWell(
+                onTap: onTapIcon,
+                child: Icon(
+                  obscureText == true ? Icons.visibility_off : Icons.visibility,
+                  color: ColorApp.iconColor,
+                ),
+              )
+            : null,
         prefixIconColor: ColorApp.iconColor,
         border: roundedBorder,
         enabledBorder: roundedBorder,

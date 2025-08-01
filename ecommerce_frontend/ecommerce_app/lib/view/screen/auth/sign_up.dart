@@ -62,7 +62,7 @@ class SignUp extends StatelessWidget {
                         },
                         labelText: 'fullname',
                         hintText: 'fullname_hint',
-                        icon: Icons.badge_outlined,
+                        preIcon: Icons.badge_outlined,
                         keyboardType: TextInputType.name,
                       ),
                       const SizedBox(height: 20),
@@ -75,7 +75,7 @@ class SignUp extends StatelessWidget {
                         },
                         labelText: 'email',
                         hintText: 'email_hint',
-                        icon: Icons.email_outlined,
+                        preIcon: Icons.email_outlined,
                         keyboardType: TextInputType.emailAddress,
                       ),
                       const SizedBox(height: 20),
@@ -88,7 +88,7 @@ class SignUp extends StatelessWidget {
                         },
                         labelText: 'phone',
                         hintText: 'phone_hint',
-                        icon: Icons.phone_android_outlined,
+                        preIcon: Icons.phone_android_outlined,
                         keyboardType: TextInputType.phone,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly
@@ -104,14 +104,16 @@ class SignUp extends StatelessWidget {
                         },
                         labelText: 'password',
                         hintText: 'password_hint',
-                        icon: Icons.lock_outline,
+                        preIcon: Icons.lock_outline,
                         keyboardType: TextInputType.text,
-                        obscureText: true,
+                        obscureText: controller.isShowPass,
+                        suffIcon: Icons.visibility,
+                        onTapIcon: () {
+                          controller.showPassword();
+                        },
                       ),
 
-                      const SizedBox(height: 16),
-
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 36),
                       AuthButton(
                         label: "signup".tr,
                         onPressed: () {

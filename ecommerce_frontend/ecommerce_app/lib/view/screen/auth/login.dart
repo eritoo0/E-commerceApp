@@ -59,7 +59,7 @@ class Login extends StatelessWidget {
                         controller: controller.emailController,
                         labelText: 'email'.tr,
                         hintText: 'email_hint'.tr,
-                        icon: Icons.email_outlined,
+                        preIcon: Icons.email_outlined,
                         keyboardType: TextInputType.emailAddress,
                       ),
                       const SizedBox(height: 20),
@@ -70,9 +70,13 @@ class Login extends StatelessWidget {
                         controller: controller.passwordController,
                         labelText: 'password'.tr,
                         hintText: 'password_hint'.tr,
-                        icon: Icons.lock_outline,
+                        preIcon: Icons.lock_outline,
                         keyboardType: TextInputType.text,
-                        obscureText: true,
+                        obscureText: controller.isShowPass,
+                        suffIcon: Icons.visibility,
+                        onTapIcon: () {
+                          controller.showPassword();
+                        },
                       ),
 
                       const SizedBox(height: 16),

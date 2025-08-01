@@ -9,7 +9,6 @@ validInput(String val, int min, int max, String type) {
       return 'required'.tr;
     } else if (val.length < min || val.length > max) {
       return 'username_length'
-          .tr
           .trParams({'min': min.toString(), 'max': max.toString()});
     } else if (!GetUtils.isUsername(val)) {
       return 'username_not_valid'.tr;

@@ -11,47 +11,45 @@ class VerifyCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    VerifycodeControllerImplement controller =
-        Get.put(VerifycodeControllerImplement());
-
     return Scaffold(
-      backgroundColor: ColorApp.bgColor,
-      appBar: AppBar(
-        centerTitle: true,
         backgroundColor: ColorApp.bgColor,
-        elevation: 0,
-        title: Text(
-          "verifyCode".tr,
-          style: Theme.of(context).textTheme.bodyMedium,
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: ColorApp.bgColor,
+          elevation: 0,
+          title: Text(
+            "verifyCode".tr,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            CustomTitle(title: "check_code".tr),
-            const SizedBox(height: 10),
-            CustomBody(bodyText: "check_code_sentence".tr),
-            const SizedBox(height: 24),
-            OtpTextField(
-              numberOfFields: 5,
-              borderColor: ColorApp.primaryColor,
-              //set to true to show as box or false to show as dash
-              showFieldAsBox: true,
-              //runs when a code is typed in
-              onCodeChanged: (String code) {
-                //handle validation or checks here
-              },
-              //runs when every textfield is filled
-              onSubmit: (String verificationCode) {
-                controller.goToResetCode();
-              }, // end onSubmit
+        body: GetBuilder<VerifycodeControllerImplement>(
+          builder: (controller) => SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                CustomTitle(title: "check_code".tr),
+                const SizedBox(height: 10),
+                CustomBody(bodyText: "check_code_sentence".tr),
+                const SizedBox(height: 24),
+                OtpTextField(
+                  numberOfFields: 5,
+                  borderColor: ColorApp.primaryColor,
+                  //set to true to show as box or false to show as dash
+                  showFieldAsBox: true,
+                  //runs when a code is typed in
+                  onCodeChanged: (String code) {
+                    //handle validation or checks here
+                  },
+                  //runs when every textfield is filled
+                  onSubmit: (String verificationCode) {
+                    controller.goToResetCode();
+                  }, // end onSubmit
+                ),
+                const SizedBox(height: 20),
+              ],
             ),
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
