@@ -1,23 +1,41 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+import random
+from django.core.mail import send_mail
 from rest_framework import status
 from .serializers import UserSerializer
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.hashers import check_password
+from .models import CustomUser
 
 User = get_user_model()
 
 class SignupView(APIView):
     def post(self, request):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(users_approve=False)  # default to unapproved
-            return Response({'message': 'User created successfully', 'user': serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    
+        data = request.data.copy()
+        
+        # Generate 6-digit code
+        verification_code = str(random.randint(100000, 999999))
+        data["users_verfiycode"] = verification_code
+        data["users_approve"] = False
 
+        serializer = UserSerializer(data=data)
+        if serializer.is_valid():
+            user = serializer.save()
+
+            # Send email with code
+            send_mail(
+                subject="Your Verification Code",
+                message=f"Hello {user.username}, your verification code is: {verification_code}",
+                from_email="youremail@gmail.com",  # must match EMAIL_HOST_USER
+                recipient_list=[user.email],
+                fail_silently=False
+            )
+
+            return Response({"message": "User created and code sent", "user": serializer.data}, status=201)
+
+        return Response(serializer.errors, status=400)
 
 
 
@@ -32,8 +50,11 @@ class LoginView(APIView):
             if not check_password(password, user.password):
                 return Response({"message": "Wrong password"}, status=401)
 
+            # if not user.users_approve:
+            #     return Response({"message": "User not approved"}, status=403)
             if not user.users_approve:
-                return Response({"message": "User not approved"}, status=403)
+                return Response({'message': 'Account not verified'}, status=status.HTTP_403_FORBIDDEN)
+
 
             token, created = Token.objects.get_or_create(user=user)
 
@@ -44,3 +65,47 @@ class LoginView(APIView):
 
         except User.DoesNotExist:
             return Response({"message": "User not found"}, status=404)
+        
+        
+
+class VerifyCodeView(APIView):
+    def post(self, request):
+        email = request.data.get('email')
+        code = request.data.get('verifycode')
+
+        try:
+            user = CustomUser.objects.get(email=email)
+            if user.users_verfiycode == code:
+                user.users_approve = True
+                user.save()
+                return Response({'message': 'Account verified successfully'}, status=status.HTTP_200_OK)
+            else:
+                return Response({'message': 'Invalid verification code'}, status=status.HTTP_400_BAD_REQUEST)
+        except CustomUser.DoesNotExist:
+            return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+    
+        
+        
+
+class ResendCodeView(APIView):
+    def post(self, request):
+        email = request.data.get('email')
+
+        try:
+            user = CustomUser.objects.get(email=email)
+            new_code = str(random.randint(100000, 999999))
+            user.users_verfiycode = new_code
+            user.save()
+
+            send_mail(
+                'Your new verification code',
+                f'Your new code is: {new_code}',
+                'your_email@gmail.com',
+                [user.email],
+                fail_silently=False,
+            )
+
+            return Response({'message': 'Verification code resent'}, status=status.HTTP_200_OK)
+        except CustomUser.DoesNotExist:
+            return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
