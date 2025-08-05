@@ -2,10 +2,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import UserSerializer
-from django.contrib.auth import get_user_model
-
-from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
+from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth.hashers import check_password
 
 User = get_user_model()
 
@@ -21,24 +20,27 @@ class SignupView(APIView):
 
 
 
+
 class LoginView(APIView):
     def post(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
 
-        user = authenticate(request, username=email, password=password)
+        try:
+            user = User.objects.get(email=email)
 
-        if user is not None:
+            if not check_password(password, user.password):
+                return Response({"message": "Wrong password"}, status=401)
+
             if not user.users_approve:
-                return Response({"message": "Account not approved"}, status=status.HTTP_403_FORBIDDEN)
+                return Response({"message": "User not approved"}, status=403)
 
-            # Optional: Use Django Token Auth (or JWT)
             token, created = Token.objects.get_or_create(user=user)
 
             return Response({
-                "message": "Login successful",
                 "token": token.key,
                 "user": UserSerializer(user).data
             })
 
-        return Response({"message": "Invalid email or password"}, status=status.HTTP_401_UNAUTHORIZED)
+        except User.DoesNotExist:
+            return Response({"message": "User not found"}, status=404)
