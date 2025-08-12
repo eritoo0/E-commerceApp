@@ -83,6 +83,7 @@ class MyTranslation extends Translations {
           "exit_message": "Are you sure you want to exit the application?",
           "cancel": "Cancel",
           "exit": "Exit",
+          'resend_code': "Resend code",
         },
         "fr": {
           "Choose Language": "Choisir la langue",
@@ -162,7 +163,8 @@ class MyTranslation extends Translations {
           "exit_title": "Quitter l'application",
           "exit_message": "Êtes-vous sûr de vouloir quitter l'application ?",
           "cancel": "Annuler",
-          "exit": "Quitter"
+          "exit": "Quitter",
+          'resend_code': "Renvoyer le code",
         },
         "ar": {
           "Choose Language": "اختر اللغة",
@@ -242,6 +244,7 @@ class MyTranslation extends Translations {
           "exit_message": "هل أنت متأكد أنك تريد الخروج من التطبيق؟",
           "cancel": "إلغاء",
           "exit": "خروج",
+          'resend_code': "إعادة إرسال الرمز",
         },
       };
 }

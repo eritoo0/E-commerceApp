@@ -35,7 +35,7 @@ class VerifyCodeSignup extends StatelessWidget {
             CustomBody(bodyText: "check_code_sentence".tr),
             const SizedBox(height: 24),
             OtpTextField(
-              numberOfFields: 5,
+              numberOfFields: 6,
               borderColor: ColorApp.primaryColor,
               //set to true to show as box or false to show as dash
               showFieldAsBox: true,
@@ -45,10 +45,25 @@ class VerifyCodeSignup extends StatelessWidget {
               },
               //runs when every textfield is filled
               onSubmit: (String verificationCode) {
-                controller.goToSuccessSignUP();
+                controller.checkCode();
               }, // end onSubmit
             ),
             const SizedBox(height: 20),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  controller.resendCode();
+                },
+                child: Text(
+                  'resend_code'.tr,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(decoration: TextDecoration.underline),
+                ),
+              ),
+            ),
           ],
         ),
       ),

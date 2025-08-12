@@ -18,7 +18,8 @@ Future<void> main() async {
   });
 
   signup.fold(
-    (err) => print("Signup error: $err"),
+    (err) => print(
+        "Signup error: $err"), // to handle  if failure --> no data () or offline
     (data) => print("Signup ok: $data"),
   );
 

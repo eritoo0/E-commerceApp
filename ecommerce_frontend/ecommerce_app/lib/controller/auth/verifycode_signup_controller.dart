@@ -1,20 +1,137 @@
+import 'package:ecommerce_app/core/class/crud.dart';
+import 'package:ecommerce_app/core/class/status_request.dart';
 import 'package:ecommerce_app/core/constant/routes.dart';
+import 'package:ecommerce_app/linkapi.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class VerifycodeSignupController extends GetxController {
-  checkCode();
-  goToSuccessSignUP();
+  Future<void> checkCode();
+  Future<void> resendCode();
+  void goToSuccessSignUP();
 }
 
 class VerifycodeSignupControllerImplement extends VerifycodeSignupController {
-  late String verificationCode;
+  final crud = Crud();
+
+  /// email passed from the signup page
+  late final String email;
+
+  /// code input from the user
+  late TextEditingController codeController;
+
+  final isLoading = false.obs;
+
   @override
-  goToSuccessSignUP() {
-    Get.toNamed(AppRoute.successSignUp);
+  void onInit() {
+    super.onInit();
+    codeController = TextEditingController();
+    // grab email from previous screen (we passed it in signup controller)
+    email =
+        (Get.arguments != null ? Get.arguments['email'] as String? : null) ??
+            "";
   }
 
   @override
-  checkCode() {
-    throw UnimplementedError();
+  void onClose() {
+    codeController.dispose();
+    super.onClose();
+  }
+
+  @override
+  Future<void> checkCode() async {
+    final code = codeController.text.trim();
+
+    // basic validation
+    if (email.isEmpty) {
+      Get.snackbar("Verify", "Missing email. Go back and sign up again.",
+          snackPosition: SnackPosition.BOTTOM);
+      return;
+    }
+    // if (code.length != 6 || int.tryParse(code) == null) {
+    //   Get.snackbar("Verify", "Enter the 6‑digit code.",
+    //       snackPosition: SnackPosition.BOTTOM);
+    //   return;
+    // }
+
+    if (isLoading.value) return;
+    isLoading.value = true;
+
+    try {
+      final res = await crud.postData(AppLink.verify, {
+        "email": email,
+        "verifycode": code,
+      });
+
+      res.fold(
+        (err) {
+          isLoading.value = false;
+          String msg = "Something went wrong";
+          if (err == StatusRequest.offlineFailure) {
+            msg = "No internet connection";
+          } else if (err == StatusRequest.serverFailure) {
+            msg = "Server error";
+          } else if (err == StatusRequest.failure) {
+            msg = "Unexpected error";
+          }
+          Get.snackbar("Verification failed", msg,
+              snackPosition: SnackPosition.BOTTOM);
+        },
+        (data) {
+          isLoading.value = false;
+          final msg = data["message"]?.toString() ?? "Account verified";
+          Get.snackbar("Success", msg, snackPosition: SnackPosition.BOTTOM);
+
+          // small delay so snackbar shows
+          Future.delayed(const Duration(milliseconds: 600), goToSuccessSignUP);
+        },
+      );
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar("Verification failed", e.toString(),
+          snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+  @override
+  Future<void> resendCode() async {
+    if (email.isEmpty) {
+      Get.snackbar("Resend code", "Missing email.",
+          snackPosition: SnackPosition.BOTTOM);
+      return;
+    }
+    if (isLoading.value) return;
+    isLoading.value = true;
+
+    try {
+      final res = await crud.postData(AppLink.resendCode, {
+        "email": email,
+      });
+
+      res.fold(
+        (err) {
+          isLoading.value = false;
+          String msg = "Could not resend code";
+          if (err == StatusRequest.offlineFailure) {
+            msg = "No internet connection";
+          }
+          Get.snackbar("Resend code", msg, snackPosition: SnackPosition.BOTTOM);
+        },
+        (data) {
+          isLoading.value = false;
+          final msg = data["message"]?.toString() ?? "Verification code resent";
+          Get.snackbar("Resend code", msg, snackPosition: SnackPosition.BOTTOM);
+        },
+      );
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar("Resend code", e.toString(),
+          snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+  @override
+  void goToSuccessSignUP() {
+    Get.offAllNamed(AppRoute.successSignUp);
   }
 }

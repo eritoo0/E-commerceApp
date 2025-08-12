@@ -26,6 +26,10 @@ class Crud {
         var responseBody = jsonDecode(response.body);
         return Right(responseBody);
       }
+      print("HTTP ${response.statusCode} ${response.reasonPhrase}");
+      print("URL: $linkUrl");
+      print("Request body: $data");
+      print("Response raw: ${response.body}");
 
       // Handle error status codes
       return const Left(StatusRequest.serverFailure);
