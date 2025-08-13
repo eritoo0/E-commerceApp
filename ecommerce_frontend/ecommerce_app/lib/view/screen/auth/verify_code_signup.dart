@@ -40,12 +40,12 @@ class VerifyCodeSignup extends StatelessWidget {
               //set to true to show as box or false to show as dash
               showFieldAsBox: true,
               //runs when a code is typed in
-              onCodeChanged: (String code) {
-                //handle validation or checks here
+              onCodeChanged: (code) {
+                controller.codeController.text = code;
               },
               //runs when every textfield is filled
               onSubmit: (String verificationCode) {
-                controller.checkCode();
+                controller.checkCode(code: verificationCode);
               }, // end onSubmit
             ),
             const SizedBox(height: 20),

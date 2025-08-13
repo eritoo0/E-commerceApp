@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class VerifycodeSignupController extends GetxController {
-  Future<void> checkCode();
+  Future<void> checkCode({required String code});
   Future<void> resendCode();
   void goToSuccessSignUP();
 }
@@ -21,6 +21,27 @@ class VerifycodeSignupControllerImplement extends VerifycodeSignupController {
   late TextEditingController codeController;
 
   final isLoading = false.obs;
+  // Optional: convert Arabic/Persian digits → ASCII and strip non‑digits
+  String _normalizeDigits(String s) {
+    const ai = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    const pe = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+    final buf = StringBuffer();
+    for (final r in s.runes) {
+      final ch = String.fromCharCode(r);
+      final i1 = ai.indexOf(ch);
+      if (i1 != -1) {
+        buf.write(i1);
+        continue;
+      }
+      final i2 = pe.indexOf(ch);
+      if (i2 != -1) {
+        buf.write(i2);
+        continue;
+      }
+      buf.write(ch);
+    }
+    return buf.toString().replaceAll(RegExp(r'[^0-9]'), '');
+  }
 
   @override
   void onInit() {
@@ -39,20 +60,21 @@ class VerifycodeSignupControllerImplement extends VerifycodeSignupController {
   }
 
   @override
-  Future<void> checkCode() async {
-    final code = codeController.text.trim();
-
-    // basic validation
+  Future<void> checkCode({required String code}) async {
     if (email.isEmpty) {
       Get.snackbar("Verify", "Missing email. Go back and sign up again.",
           snackPosition: SnackPosition.BOTTOM);
       return;
     }
-    // if (code.length != 6 || int.tryParse(code) == null) {
-    //   Get.snackbar("Verify", "Enter the 6‑digit code.",
-    //       snackPosition: SnackPosition.BOTTOM);
-    //   return;
-    // }
+
+    // sanitize input
+    code = _normalizeDigits(code.trim());
+
+    if (code.length != 6) {
+      Get.snackbar("Verify", "Enter the 6‑digit code.",
+          snackPosition: SnackPosition.BOTTOM);
+      return;
+    }
 
     if (isLoading.value) return;
     isLoading.value = true;
@@ -71,9 +93,7 @@ class VerifycodeSignupControllerImplement extends VerifycodeSignupController {
             msg = "No internet connection";
           } else if (err == StatusRequest.serverFailure) {
             msg = "Server error";
-          } else if (err == StatusRequest.failure) {
-            msg = "Unexpected error";
-          }
+          } else if (err == StatusRequest.failure) msg = "Unexpected error";
           Get.snackbar("Verification failed", msg,
               snackPosition: SnackPosition.BOTTOM);
         },
@@ -81,8 +101,6 @@ class VerifycodeSignupControllerImplement extends VerifycodeSignupController {
           isLoading.value = false;
           final msg = data["message"]?.toString() ?? "Account verified";
           Get.snackbar("Success", msg, snackPosition: SnackPosition.BOTTOM);
-
-          // small delay so snackbar shows
           Future.delayed(const Duration(milliseconds: 600), goToSuccessSignUP);
         },
       );
