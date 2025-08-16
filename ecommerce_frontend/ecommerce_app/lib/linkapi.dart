@@ -8,4 +8,8 @@ class AppLink {
   static const String login = "${users}login/"; // POST
   static const String verify = "${users}verify/"; // POST
   static const String resendCode = "${users}resend-code/"; // POST
+  //forget pass
+  static const String forgetPassword = "${users}forgot-password/"; // POST
+  static const String verifyResetCode = "${users}verify-reset-code/"; // POST
+  static const String resetPassword = "${users}reset-password/"; // POST
 }

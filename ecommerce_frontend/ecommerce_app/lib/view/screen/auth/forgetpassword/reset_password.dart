@@ -71,7 +71,7 @@ class ResetPassword extends StatelessWidget {
                   AuthButton(
                     label: "reset_pass".tr,
                     onPressed: () {
-                      controller.goToSuccessResetpass();
+                      controller.submit();
                     },
                   ),
                 ],

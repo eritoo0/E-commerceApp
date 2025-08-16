@@ -109,3 +109,85 @@ class ResendCodeView(APIView):
             return Response({'message': 'Verification code resent'}, status=status.HTTP_200_OK)
         except CustomUser.DoesNotExist:
             return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        
+        
+
+class ForgotPasswordView(APIView):
+    def post(self, request):
+        email = (request.data.get('email') or '').strip().lower()
+        if not email:
+            return Response({'message': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = CustomUser.objects.get(email=email)
+
+            # use if just userapprove allowed / 
+            # if not user.users_approve:
+            #     return Response({'message': 'Account not verified'}, status=status.HTTP_403_FORBIDDEN)
+
+            # generate 6-digit code and store it in users_verfiycode
+            reset_code = str(random.randint(100000, 999999))
+            user.users_verfiycode = reset_code
+            user.save(update_fields=['users_verfiycode'])
+
+            send_mail(
+                subject='Password reset code',
+                message=f'Your password reset code is: {reset_code}',
+                from_email='youremail@gmail.com',
+                recipient_list=[user.email],
+                fail_silently=False,
+            )
+
+            # To avoid leaking whether an email exists, you can always return 200 with the same message.
+            return Response({'message': 'If the email exists, a reset code was sent.'}, status=status.HTTP_200_OK)
+
+        except CustomUser.DoesNotExist:
+            # same response to avoid user enumeration
+            return Response({'message': 'If the email exists, a reset code was sent.'}, status=status.HTTP_200_OK)
+
+
+
+class VerifyResetCodeView(APIView):
+    def post(self, request):
+        email = (request.data.get('email') or '').strip().lower()
+        code = (request.data.get('verifycode') or '').strip()
+
+        if not email or not code:
+            return Response({'message': 'Email and code are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = CustomUser.objects.get(email=email)
+            if user.users_verfiycode == code:
+                return Response({'message': 'Code verified'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Invalid or expired code'}, status=status.HTTP_400_BAD_REQUEST)
+        except CustomUser.DoesNotExist:
+            return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class ResetPasswordView(APIView):
+    def post(self, request):
+        email = (request.data.get('email') or '').strip().lower()
+        code = (request.data.get('verifycode') or '').strip()
+        new_password = request.data.get('new_password') or ''
+
+        if not email or not code or not new_password:
+            return Response({'message': 'Email, code, and new_password are required'}, status=status.HTTP_400_BAD_REQUEST)
+        if len(new_password) < 6:
+            return Response({'message': 'Password must be at least 6 characters'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = CustomUser.objects.get(email=email)
+            if user.users_verfiycode != code:
+                return Response({'message': 'Invalid or expired code'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # set the new password
+            user.set_password(new_password)
+            # clear the code so it can’t be reused
+            user.users_verfiycode = ''
+            user.save(update_fields=['password', 'users_verfiycode'])
+
+            return Response({'message': 'Password updated'}, status=status.HTTP_200_OK)
+
+        except CustomUser.DoesNotExist:
+            return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
