@@ -8,6 +8,7 @@ import 'package:ecommerce_app/view/screen/auth/sign_up.dart';
 import 'package:ecommerce_app/view/screen/auth/forgetpassword/verify_code.dart';
 import 'package:ecommerce_app/view/screen/auth/success_signup.dart';
 import 'package:ecommerce_app/view/screen/auth/verify_code_signup.dart';
+import 'package:ecommerce_app/view/screen/home.dart';
 import 'package:ecommerce_app/view/screen/language.dart';
 import 'package:ecommerce_app/view/screen/onboarding.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
@@ -31,6 +32,9 @@ List<GetPage<dynamic>>? routes = [
 
   // Onboarding
   GetPage(name: AppRoute.onBoarding, page: () => const OnBoarding()),
+
+  //
+  GetPage(name: AppRoute.home, page: () => const Home()),
 ];
 
 // Map<String, Widget Function(BuildContext)> routess = {

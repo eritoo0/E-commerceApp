@@ -1,45 +1,159 @@
+import 'package:ecommerce_app/core/class/crud.dart';
+import 'package:ecommerce_app/core/class/status_request.dart';
 import 'package:ecommerce_app/core/constant/routes.dart';
+import 'package:ecommerce_app/linkapi.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+// If persist tokens, use GetStorage or SharedPreferences
+// import 'package:get_storage/get_storage.dart';
 
 abstract class LoginController extends GetxController {
-  login();
-  goToSignUp();
-  goToForgetPassword();
+  Future<void> login();
+  void goToSignUp();
+  void goToForgetPassword();
+  void showPassword();
 }
 
 class LoginControllerImplement extends LoginController {
+  final crud = Crud();
+  // final box = GetStorage(); // if store the auth token
+
   late TextEditingController emailController;
   late TextEditingController passwordController;
+
+  final formKey = GlobalKey<FormState>();
+
   bool isShowPass = true;
-  showPassword() {
-    isShowPass = isShowPass == true ? false : true;
-    update();
+  final isLoading = false.obs;
+
+  // ---------- UI helpers ----------
+  @override
+  void showPassword() {
+    isShowPass = !isShowPass;
+    update(); // rebuild GetBuilder widgets
   }
 
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  void _hideKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
 
+  void _snack(String title, String message) {
+    _hideKeyboard();
+    Get.snackbar(
+      title,
+      message,
+      snackPosition: SnackPosition.TOP,
+      margin: const EdgeInsets.all(12),
+      duration: const Duration(seconds: 2),
+    );
+  }
+
+  // Validators you can reference from TextFormField.validator or using function validInput
+  String? validateEmail(String? v) {
+    final s = (v ?? '').trim();
+    if (s.isEmpty) return 'Email is required';
+    final ok = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(s);
+    if (!ok) return 'Enter a valid email';
+    return null;
+  }
+
+  String? validatePassword(String? v) {
+    final s = (v ?? '');
+    if (s.isEmpty) return 'Password is required';
+    if (s.length < 6) return 'Password must be at least 6 characters';
+    return null;
+  }
+
+  // ---------- Actions ----------
   @override
-  login() {
-    var formdata = formKey.currentState;
-    if (formdata!.validate()) {
-      print("validate");
-    } else {
-      print("Not Valide");
+  Future<void> login() async {
+    _hideKeyboard();
+
+    final form = formKey.currentState;
+    if (form == null || !form.validate()) {
+      _snack('Login', 'Please fix the errors and try again.');
+      return;
+    }
+
+    if (isLoading.value) return;
+    isLoading.value = true;
+    update();
+
+    final email = emailController.text.trim().toLowerCase();
+    final password = passwordController.text;
+
+    try {
+      final res = await crud.postData(AppLink.login, {
+        // Backend expects email because USERNAME_FIELD='email'
+        "email": email,
+        "password": password,
+      });
+
+      res.fold(
+        (err) {
+          isLoading.value = false;
+          update();
+
+          String msg = "Could not sign in";
+          if (err == StatusRequest.offlineFailure) {
+            msg = "No internet connection";
+          } else if (err == StatusRequest.serverFailure) {
+            msg = "Wrong email or password";
+          }
+          _snack("Login failed", msg);
+        },
+        (data) {
+          isLoading.value = false;
+          update();
+
+          // Typical DRF responses:
+          // success => {"token": "..."} or {"auth_token": "..."} or {"key": "..."} + maybe user object
+          // error   => {"detail": "..."} or {"non_field_errors": ["..."]} or {"email": ["..."]}
+
+          final token = data["token"] ?? data["auth_token"] ?? data["key"];
+          final detail = data["detail"]?.toString();
+          final nonField = (data["non_field_errors"] is List &&
+                  data["non_field_errors"].isNotEmpty)
+              ? data["non_field_errors"][0].toString()
+              : null;
+          final emailErr = (data["email"] is List && data["email"].isNotEmpty)
+              ? data["email"][0].toString()
+              : null;
+
+          if (token != null) {
+            // Optional: persist token for authenticated requests
+            // box.write('token', token);
+
+            _snack("Welcome", "Signed in successfully");
+            // Navigate to your main/home route
+            Get.offAllNamed(AppRoute.home);
+            return;
+          }
+
+          // Show server-provided error if present
+          final msg =
+              detail ?? nonField ?? emailErr ?? data["message"]?.toString();
+          if (msg != null) {
+            _snack("Login failed", msg);
+            return;
+          }
+
+          // Fallback
+          _snack("Login failed", "Invalid email or password");
+        },
+      );
+    } catch (e) {
+      isLoading.value = false;
+      update();
+      _snack("Login failed", e.toString());
     }
   }
 
   @override
-  goToSignUp() {
-    Get.offNamed(AppRoute.signUp);
-  }
+  void goToSignUp() => Get.offNamed(AppRoute.signUp);
 
   @override
-  goToForgetPassword() {
-    Get.toNamed(AppRoute.forgetPassword);
-  }
+  void goToForgetPassword() => Get.toNamed(AppRoute.forgetPassword);
 
+  // ---------- Lifecycle ----------
   @override
   void onInit() {
     emailController = TextEditingController();
