@@ -92,8 +92,10 @@ class VerifycodeSignupControllerImplement extends VerifycodeSignupController {
           if (err == StatusRequest.offlineFailure) {
             msg = "No internet connection";
           } else if (err == StatusRequest.serverFailure) {
-            msg = "Server error";
-          } else if (err == StatusRequest.failure) msg = "Unexpected error";
+            msg = "Wrong verification code";
+          } else if (err == StatusRequest.failure) {
+            msg = "Unexpected error";
+          }
           Get.snackbar("Verification failed", msg,
               snackPosition: SnackPosition.BOTTOM);
         },
@@ -113,38 +115,57 @@ class VerifycodeSignupControllerImplement extends VerifycodeSignupController {
 
   @override
   Future<void> resendCode() async {
+    // 1) Hide the keyboard so the snackbar isn’t covered
+    FocusManager.instance.primaryFocus?.unfocus();
+
     if (email.isEmpty) {
-      Get.snackbar("Resend code", "Missing email.",
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar(
+        "Resend code",
+        "Missing email.",
+        snackPosition: SnackPosition.TOP,
+      );
       return;
     }
     if (isLoading.value) return;
     isLoading.value = true;
 
     try {
-      final res = await crud.postData(AppLink.resendCode, {
-        "email": email,
-      });
-
+      final res = await crud.postData(AppLink.resendCode, {"email": email});
       res.fold(
         (err) {
           isLoading.value = false;
           String msg = "Could not resend code";
-          if (err == StatusRequest.offlineFailure) {
+          if (err == StatusRequest.offlineFailure)
             msg = "No internet connection";
-          }
-          Get.snackbar("Resend code", msg, snackPosition: SnackPosition.BOTTOM);
+          Get.snackbar(
+            "Resend code",
+            msg,
+            snackPosition: SnackPosition.TOP,
+            margin: const EdgeInsets.all(12),
+            duration: const Duration(seconds: 2),
+          );
         },
         (data) {
           isLoading.value = false;
           final msg = data["message"]?.toString() ?? "Verification code resent";
-          Get.snackbar("Resend code", msg, snackPosition: SnackPosition.BOTTOM);
+          Get.snackbar(
+            "Resend code",
+            msg,
+            snackPosition: SnackPosition.TOP,
+            margin: const EdgeInsets.all(12),
+            duration: const Duration(seconds: 2),
+          );
         },
       );
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Resend code", e.toString(),
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar(
+        "Resend code",
+        e.toString(),
+        snackPosition: SnackPosition.TOP,
+        margin: const EdgeInsets.all(12),
+        duration: const Duration(seconds: 2),
+      );
     }
   }
 

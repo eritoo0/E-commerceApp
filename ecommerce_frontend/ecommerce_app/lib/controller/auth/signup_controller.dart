@@ -1,6 +1,5 @@
 import 'package:ecommerce_app/core/class/crud.dart';
 import 'package:ecommerce_app/core/class/status_request.dart';
-
 import 'package:ecommerce_app/core/constant/routes.dart';
 import 'package:ecommerce_app/linkapi.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +55,7 @@ class SignUpControllerImplement extends SignUpController {
             if (err == StatusRequest.offlineFailure) {
               message = "No internet connection";
             } else if (err == StatusRequest.serverFailure) {
-              message = "Server error";
+              message = "email or phone already exist";
             } else if (err == StatusRequest.failure) {
               message = "Unexpected error";
             }

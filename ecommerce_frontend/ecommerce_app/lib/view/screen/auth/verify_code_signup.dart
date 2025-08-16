@@ -14,57 +14,60 @@ class VerifyCodeSignup extends StatelessWidget {
     VerifycodeSignupControllerImplement controller =
         Get.put(VerifycodeSignupControllerImplement());
 
-    return Scaffold(
-      backgroundColor: ColorApp.bgColor,
-      appBar: AppBar(
-        centerTitle: true,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
         backgroundColor: ColorApp.bgColor,
-        elevation: 0,
-        title: Text(
-          "verifyCode".tr,
-          style: Theme.of(context).textTheme.bodyMedium,
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: ColorApp.bgColor,
+          elevation: 0,
+          title: Text(
+            "verifyCode".tr,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            CustomTitle(title: "check_code".tr),
-            const SizedBox(height: 10),
-            CustomBody(bodyText: "check_code_sentence".tr),
-            const SizedBox(height: 24),
-            OtpTextField(
-              numberOfFields: 6,
-              borderColor: ColorApp.primaryColor,
-              //set to true to show as box or false to show as dash
-              showFieldAsBox: true,
-              //runs when a code is typed in
-              onCodeChanged: (code) {
-                controller.codeController.text = code;
-              },
-              //runs when every textfield is filled
-              onSubmit: (String verificationCode) {
-                controller.checkCode(code: verificationCode);
-              }, // end onSubmit
-            ),
-            const SizedBox(height: 20),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  controller.resendCode();
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              CustomTitle(title: "check_code".tr),
+              const SizedBox(height: 10),
+              CustomBody(bodyText: "check_code_sentence".tr),
+              const SizedBox(height: 24),
+              OtpTextField(
+                numberOfFields: 6,
+                borderColor: ColorApp.primaryColor,
+                //set to true to show as box or false to show as dash
+                showFieldAsBox: true,
+                //runs when a code is typed in
+                onCodeChanged: (code) {
+                  controller.codeController.text = code;
                 },
-                child: Text(
-                  'resend_code'.tr,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(decoration: TextDecoration.underline),
+                //runs when every textfield is filled
+                onSubmit: (String verificationCode) {
+                  controller.checkCode(code: verificationCode);
+                }, // end onSubmit
+              ),
+              const SizedBox(height: 20),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    controller.resendCode();
+                  },
+                  child: Text(
+                    'resend_code'.tr,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(decoration: TextDecoration.underline),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
