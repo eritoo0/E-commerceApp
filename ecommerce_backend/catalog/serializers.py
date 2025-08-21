@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category
+from .models import Category , Products
 
 class CategoryLiteSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
