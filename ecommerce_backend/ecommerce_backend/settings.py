@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "corsheaders",  # for flutter calls
     "users",
+    "catalog",
+    "django_filters",  # for easy query filtering
 ]
 
 MIDDLEWARE = [
