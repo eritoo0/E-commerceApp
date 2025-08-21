@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "users",
     "catalog",
     "django_filters",  # for easy query filtering
+    "parler",
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,26 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
 ]
+
+USE_I18N = True
+LANGUAGE_CODE = "en"   # default
+LANGUAGES = [
+    ("en", "English"),
+    ("fr", "Français"),
+    ("ar", "العربية"),
+]
+
+PARLER_LANGUAGES = {
+    1: (  # site ID
+        {"code": "en"},
+        {"code": "fr"},
+        {"code": "ar"},
+    ),
+    "default": {
+        "fallbacks": ["en"],      # fall back to English if missing
+        "hide_untranslated": False,
+    },
+}
 
 ROOT_URLCONF = "ecommerce_backend.urls"
 
