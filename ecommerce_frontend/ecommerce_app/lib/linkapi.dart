@@ -13,3 +13,4 @@ class AppLink {
   static const String verifyResetCode = "${users}verify-reset-code/"; // POST
   static const String resetPassword = "${users}reset-password/"; // POST
 }
+  
