@@ -1,7 +1,9 @@
 import 'package:ecommerce_app/core/class/crud.dart';
 import 'package:ecommerce_app/core/class/status_request.dart';
 import 'package:ecommerce_app/core/constant/routes.dart';
+import 'package:ecommerce_app/core/services/services.dart';
 import 'package:ecommerce_app/linkapi.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // If persist tokens, use GetStorage or SharedPreferences
@@ -16,6 +18,8 @@ abstract class LoginController extends GetxController {
 
 class LoginControllerImplement extends LoginController {
   final crud = Crud();
+
+  MyServices myServices = Get.find();
   // final box = GetStorage(); // if store the auth token
 
   late TextEditingController emailController;
@@ -121,9 +125,30 @@ class LoginControllerImplement extends LoginController {
           if (token != null) {
             // Optional: persist token for authenticated requests
             // box.write('token', token);
+            // ✅ Save user info into SharedPreferences
+            // Save token
+            myServices.sharedPreferences.setString("token", token);
+
+            // Extract user object
+            final user = data["user"];
+
+            // Save user info
+            if (user != null) {
+              myServices.sharedPreferences
+                  .setString("id", user["id"].toString());
+              myServices.sharedPreferences
+                  .setString("username", user["username"] ?? "");
+              myServices.sharedPreferences
+                  .setString("email", user["email"] ?? "");
+              myServices.sharedPreferences
+                  .setString("phone", user["users_phone"] ?? "");
+            }
+
+            // Save step = 2  to check logged in to skip the onboarding
+            //MyServices.sharedPreferences.setInt("step", 2);
 
             _snack("Welcome", "Signed in successfully");
-            // Navigate to your main/home route
+
             Get.offAllNamed(AppRoute.home);
             return;
           }
@@ -156,6 +181,12 @@ class LoginControllerImplement extends LoginController {
   // ---------- Lifecycle ----------
   @override
   void onInit() {
+    // FirebaseMessaging.instance.getToken().then(
+    //   (value) {
+    //     print(value);
+    //     String? token = value;
+    //   },
+    // );
     emailController = TextEditingController();
     passwordController = TextEditingController();
     super.onInit();

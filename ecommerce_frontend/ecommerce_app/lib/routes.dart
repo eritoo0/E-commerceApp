@@ -16,7 +16,9 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 List<GetPage<dynamic>>? routes = [
   // Auth routes
   GetPage(
-      name: "/", page: () => const Language(), middlewares: [MyMiddleware()]),
+      name: AppRoute.language,
+      page: () => const Language(),
+      middlewares: [MyMiddleware()]),
   GetPage(name: AppRoute.login, page: () => const Login()),
 
   GetPage(name: AppRoute.signUp, page: () => const SignUp()),

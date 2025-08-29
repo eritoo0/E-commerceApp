@@ -10,9 +10,19 @@ class MyMiddleware extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    if (myServices.sharedPreferences.getString("onBoarding") == "1") {
+    final token = myServices.sharedPreferences.getString("token");
+    final onBoarding = myServices.sharedPreferences.getString("onBoarding");
+
+    // If first time, go to onboarding
+    if (onBoarding != "1") {
+      return const RouteSettings(name: AppRoute.language);
+    }
+
+    // If token exists → go to Home, else Login
+    if (token != null && token.isNotEmpty) {
+      return const RouteSettings(name: AppRoute.home);
+    } else {
       return const RouteSettings(name: AppRoute.login);
     }
-    return null;
   }
 }
