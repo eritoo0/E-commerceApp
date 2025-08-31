@@ -1,23 +1,21 @@
-import 'package:ecommerce_app/controller/home_controller.dart';
+import 'package:ecommerce_app/core/constant/color.dart';
+import 'package:ecommerce_app/view/widget/home/home_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  HomeControllerImplement homeController = Get.put(HomeControllerImplement());
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("${homeController.username}"), // just to test
+    return const Scaffold(
+      backgroundColor: ColorApp.bgColor,
+      appBar: HomeAppBar(),
+      body: Center(
+        child: Text(
+          "Home content goes here...",
+          style: TextStyle(color: ColorApp.bodyFont),
+        ),
       ),
-      body: Container(),
     );
   }
 }
