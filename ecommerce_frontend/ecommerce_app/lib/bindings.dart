@@ -3,6 +3,7 @@ import 'package:ecommerce_app/controller/auth/forgetpassword/resetpassword_contr
 import 'package:ecommerce_app/controller/auth/forgetpassword/verifycode_controller.dart';
 import 'package:ecommerce_app/controller/auth/login_controller.dart';
 import 'package:ecommerce_app/controller/auth/signup_controller.dart';
+import 'package:ecommerce_app/controller/home_controller.dart';
 import 'package:get/get.dart';
 
 class MyBindings extends Bindings {
@@ -20,6 +21,8 @@ class MyBindings extends Bindings {
         fenix: true);
     Get.lazyPut<VerifycodeControllerImplement>(
         () => VerifycodeControllerImplement(),
+        fenix: true);
+    Get.lazyPut<HomeControllerImplement>(() => HomeControllerImplement(),
         fenix: true);
   }
 }

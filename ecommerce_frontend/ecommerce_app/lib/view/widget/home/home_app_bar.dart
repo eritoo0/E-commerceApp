@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:ecommerce_app/view/widget/home/searchbar.dart';
-import 'package:ecommerce_app/view/widget/icon_with_badge.dart';
+import 'package:ecommerce_app/view/widget/home/icon_with_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
