@@ -12,5 +12,7 @@ class AppLink {
   static const String forgetPassword = "${users}forgot-password/"; // POST
   static const String verifyResetCode = "${users}verify-reset-code/"; // POST
   static const String resetPassword = "${users}reset-password/"; // POST
+  // home
+  static const String categories = "${api}categories/"; // GET
+  static const String products = "${api}products/"; // GET
 }
-  

@@ -4,6 +4,7 @@ import 'package:ecommerce_app/controller/auth/forgetpassword/verifycode_controll
 import 'package:ecommerce_app/controller/auth/login_controller.dart';
 import 'package:ecommerce_app/controller/auth/signup_controller.dart';
 import 'package:ecommerce_app/controller/home_controller.dart';
+import 'package:ecommerce_app/core/class/crud.dart';
 import 'package:get/get.dart';
 
 class MyBindings extends Bindings {
@@ -24,5 +25,6 @@ class MyBindings extends Bindings {
         fenix: true);
     Get.lazyPut<HomeControllerImplement>(() => HomeControllerImplement(),
         fenix: true);
+    Get.lazyPut<Crud>(() => Crud(), fenix: true);
   }
 }

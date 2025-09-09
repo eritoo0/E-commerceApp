@@ -38,4 +38,35 @@ class Crud {
       return const Left(StatusRequest.failure);
     }
   }
+
+  Future<Either<StatusRequest, dynamic>> getData(String linkUrl) async {
+    try {
+      if (!await checkInternet()) {
+        return const Left(StatusRequest.offlineFailure);
+      }
+
+      var response = await http.get(
+        Uri.parse(linkUrl),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      );
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        // decode JSON
+        var responseBody = jsonDecode(response.body);
+
+        // responseBody can be either a List or Map depending on API
+        return Right(responseBody);
+      } else {
+        print("HTTP ${response.statusCode} ${response.reasonPhrase}");
+        print("URL: $linkUrl");
+        print("Response raw: ${response.body}");
+        return const Left(StatusRequest.serverFailure);
+      }
+    } catch (e) {
+      print("Exception in GET: $e");
+      return const Left(StatusRequest.failure);
+    }
+  }
 }
