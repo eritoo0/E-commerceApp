@@ -1,8 +1,9 @@
-import 'package:ecommerce_app/controller/home_controller.dart';
+import 'package:ecommerce_app/controller/home/home_controller.dart';
 import 'package:ecommerce_app/core/class/status_request.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:ecommerce_app/view/widget/home/categories_list.dart';
 import 'package:ecommerce_app/view/widget/home/home_app_bar.dart';
+import 'package:ecommerce_app/view/widget/home/hot_deals_list.dart';
 import 'package:ecommerce_app/view/widget/home/offer_banner.dart';
 import 'package:ecommerce_app/view/widget/home/products_grid.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +62,7 @@ class _HomeState extends State<Home> {
               const SizedBox(height: 20),
               CategoriesList(categories: controller.categories),
               const SizedBox(height: 20),
+              HotDealsList(products: controller.getDiscountedProducts()),
               ProductGrid(
                 products: controller.products,
                 scrollController: _scrollController,

@@ -8,6 +8,7 @@ abstract class HomeController extends GetxController {
   initialData();
   getCategories();
   getProducts();
+  getDiscountedProducts();
   onSearch(String query);
   filterByCategory(int? categoryId);
 }
@@ -116,5 +117,15 @@ class HomeControllerImplement extends HomeController {
   void filterByCategory(int? categoryId) {
     selectedCategoryId = categoryId;
     getProducts(refresh: true);
+  }
+
+  @override
+  @override
+  List getDiscountedProducts() {
+    return products
+        .where((product) =>
+            product["discount_percent"] != null &&
+            product["discount_percent"] > 0)
+        .toList();
   }
 }
