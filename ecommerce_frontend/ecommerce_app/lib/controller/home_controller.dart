@@ -7,7 +7,9 @@ import 'package:get/get.dart';
 abstract class HomeController extends GetxController {
   initialData();
   getCategories();
+  getProducts();
   onSearch(String query);
+  filterByCategory(int? categoryId);
 }
 
 class HomeControllerImplement extends HomeController {
@@ -18,7 +20,14 @@ class HomeControllerImplement extends HomeController {
   late TextEditingController searchController;
 
   String? username;
+  // for categories
   List categories = [];
+
+  // fro products
+  List products = [];
+  int currentPage = 1;
+  bool hasMore = true;
+  int? selectedCategoryId; // null = all products
 
   StatusRequest statusRequest = StatusRequest.none;
   @override
@@ -31,6 +40,7 @@ class HomeControllerImplement extends HomeController {
     initialData();
     searchController = TextEditingController();
     getCategories(); // fectch
+    getProducts();
     super.onInit();
   }
 
@@ -45,6 +55,7 @@ class HomeControllerImplement extends HomeController {
     print(searchController.text);
   }
 
+  @override
   getCategories() async {
     statusRequest = StatusRequest.loading;
     update();
@@ -61,5 +72,49 @@ class HomeControllerImplement extends HomeController {
     }
 
     update();
+  }
+
+  @override
+  Future<void> getProducts({bool refresh = false}) async {
+    if (refresh) {
+      currentPage = 1;
+      products.clear();
+      hasMore = true;
+    }
+
+    if (!hasMore) return;
+
+    statusRequest = StatusRequest.loading;
+    update();
+
+    var response = await homeData.getProducts(
+      page: currentPage,
+      categoryId: selectedCategoryId,
+    );
+
+    if (response is StatusRequest) {
+      statusRequest = response; // error
+    } else {
+      statusRequest = StatusRequest.success;
+
+      // Django pagination response
+      final List newProducts = response["results"];
+      products.addAll(newProducts);
+
+      // check if more pages exist
+      if (response["next"] == null) {
+        hasMore = false;
+      } else {
+        currentPage++;
+      }
+    }
+
+    update();
+  }
+
+  @override
+  void filterByCategory(int? categoryId) {
+    selectedCategoryId = categoryId;
+    getProducts(refresh: true);
   }
 }

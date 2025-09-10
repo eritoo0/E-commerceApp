@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesList extends StatelessWidget {
@@ -19,6 +20,7 @@ class CategoriesList extends StatelessWidget {
             child: Column(
               children: [
                 CircleAvatar(
+                  backgroundColor: ColorApp.primaryColor,
                   radius: 40,
                   backgroundImage: category["image_url"] != null
                       ? NetworkImage(category["image_url"])
@@ -29,7 +31,10 @@ class CategoriesList extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  category["name"].toString(),
+                  (category["name"] != null &&
+                          category["name"].toString().isNotEmpty)
+                      ? category["name"].toString()
+                      : "batata",
                   style: const TextStyle(fontSize: 14),
                 ),
               ],
