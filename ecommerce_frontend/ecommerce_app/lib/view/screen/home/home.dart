@@ -1,8 +1,6 @@
 import 'package:ecommerce_app/controller/home/home_controller.dart';
 import 'package:ecommerce_app/core/class/status_request.dart';
-import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:ecommerce_app/view/widget/home/categories_list.dart';
-import 'package:ecommerce_app/view/widget/home/home_app_bar.dart';
 import 'package:ecommerce_app/view/widget/home/hot_deals_list.dart';
 import 'package:ecommerce_app/view/widget/home/offer_banner.dart';
 import 'package:ecommerce_app/view/widget/home/products_grid.dart';
@@ -40,43 +38,39 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorApp.bgColor,
-      appBar: const HomeAppBar(),
-      body: GetBuilder<HomeControllerImplement>(
-        builder: (controller) {
-          if (controller.statusRequest == StatusRequest.loading &&
-              controller.categories.isEmpty &&
-              controller.products.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
-          }
+    return GetBuilder<HomeControllerImplement>(
+      builder: (controller) {
+        if (controller.statusRequest == StatusRequest.loading &&
+            controller.categories.isEmpty &&
+            controller.products.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-          if (controller.statusRequest == StatusRequest.failure) {
-            return const Center(child: Text("Something went wrong"));
-          }
+        if (controller.statusRequest == StatusRequest.failure) {
+          return const Center(child: Text("Something went wrong"));
+        }
 
-          return ListView(
-            controller: _scrollController,
-            children: [
-              const OfferBanner(),
-              const SizedBox(height: 20),
-              CategoriesList(categories: controller.categories),
-              const SizedBox(height: 20),
-              HotDealsList(products: controller.getDiscountedProducts()),
-              ProductGrid(
-                products: controller.products,
-                scrollController: _scrollController,
+        return ListView(
+          controller: _scrollController,
+          children: [
+            const OfferBanner(),
+            const SizedBox(height: 20),
+            CategoriesList(categories: controller.categories),
+            const SizedBox(height: 20),
+            HotDealsList(products: controller.getDiscountedProducts()),
+            ProductGrid(
+              products: controller.products,
+              scrollController: _scrollController,
+            ),
+            if (controller.statusRequest == StatusRequest.loading &&
+                controller.products.isNotEmpty)
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Center(child: CircularProgressIndicator()),
               ),
-              if (controller.statusRequest == StatusRequest.loading &&
-                  controller.products.isNotEmpty)
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Center(child: CircularProgressIndicator()),
-                ),
-            ],
-          );
-        },
-      ),
+          ],
+        );
+      },
     );
   }
 }

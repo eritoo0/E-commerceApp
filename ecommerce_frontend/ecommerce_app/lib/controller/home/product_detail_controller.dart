@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 abstract class ProductDetailsController extends GetxController {
   addToCart();
   fetchProductDetails();
+  stockLabel(int stock);
 }
 
 class ProductDetailsControllerImplement extends ProductDetailsController {
@@ -22,6 +23,14 @@ class ProductDetailsControllerImplement extends ProductDetailsController {
   void onInit() {
     super.onInit();
     fetchProductDetails();
+  }
+
+  // ---------------stock-----------------
+  @override
+  String stockLabel(int stock) {
+    if (stock == 0) return "Out of stock";
+    if (stock <= 5) return "Only a few left";
+    return "In stock";
   }
 
   // ---------- Add to cart ----------

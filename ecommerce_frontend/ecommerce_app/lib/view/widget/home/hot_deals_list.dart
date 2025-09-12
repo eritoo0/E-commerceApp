@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:ecommerce_app/core/constant/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,6 +39,7 @@ class HotDealsList extends StatelessWidget {
                   width: 180,
                   margin: const EdgeInsets.symmetric(horizontal: 8),
                   child: Card(
+                    color: ColorApp.primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

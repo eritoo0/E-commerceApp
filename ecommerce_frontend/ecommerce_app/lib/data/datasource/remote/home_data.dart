@@ -14,7 +14,7 @@ class HomeData {
         if (category["image_url"] != null) {
           category["image_url"] = category["image_url"]
               .toString()
-              .replaceFirst("127.0.0.1", "yoursomain.com");
+              .replaceFirst("127.0.0.1", "192.168.1.11");
         }
       }
       return r;

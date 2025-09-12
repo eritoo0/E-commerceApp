@@ -20,7 +20,7 @@ class MyMiddleware extends GetMiddleware {
 
     // If token exists → go to Home, else Login
     if (token != null && token.isNotEmpty) {
-      return const RouteSettings(name: AppRoute.home);
+      return const RouteSettings(name: AppRoute.homeScreen);
     } else {
       return const RouteSettings(name: AppRoute.login);
     }

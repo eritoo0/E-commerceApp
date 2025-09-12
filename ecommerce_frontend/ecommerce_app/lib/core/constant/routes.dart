@@ -13,6 +13,7 @@ class AppRoute {
   //home
   static const String home = "/home";
   static const String productDetails = "/productDetails";
+  static const String homeScreen = "/homeScreen";
 
   //language
   static const String language = "/";

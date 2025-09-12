@@ -106,13 +106,9 @@ class ProductDetails extends StatelessWidget {
 
             // ---------- Stock ----------
             Obx(() => Text(
-                  controller.stock.value > 0
-                      ? "In stock: ${controller.stock.value}"
-                      : "Out of stock",
+                  controller.stockLabel(controller.stock.value),
                   style: TextStyle(
-                    fontSize: 16,
-                    color:
-                        controller.stock.value > 0 ? Colors.green : Colors.red,
+                    color: controller.stock == 0 ? Colors.red : Colors.green,
                   ),
                 )),
             const SizedBox(height: 16),
