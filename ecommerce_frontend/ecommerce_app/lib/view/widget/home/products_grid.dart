@@ -5,12 +5,12 @@ import 'package:get/get.dart';
 
 class ProductGrid extends StatelessWidget {
   final List products;
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
 
   const ProductGrid({
     super.key,
     required this.products,
-    required this.scrollController,
+    this.scrollController,
   });
 
   @override
@@ -26,7 +26,8 @@ class ProductGrid extends StatelessWidget {
           ),
         ),
         GridView.builder(
-          controller: scrollController,
+          //controller: scrollController,
+          controller: scrollController ?? ScrollController(),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           padding: const EdgeInsets.all(8),

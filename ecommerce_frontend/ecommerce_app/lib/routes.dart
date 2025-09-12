@@ -11,6 +11,7 @@ import 'package:ecommerce_app/view/screen/auth/verify_code_signup.dart';
 import 'package:ecommerce_app/view/screen/home/home.dart';
 import 'package:ecommerce_app/view/screen/home/home_screen.dart';
 import 'package:ecommerce_app/view/screen/home/product_detail.dart';
+import 'package:ecommerce_app/view/screen/home/products.dart';
 import 'package:ecommerce_app/view/screen/language.dart';
 import 'package:ecommerce_app/view/screen/onboarding.dart';
 import 'package:get/get.dart';
@@ -46,6 +47,7 @@ List<GetPage<dynamic>>? routes = [
       product: Get.arguments,
     ),
   ),
+  GetPage(name: AppRoute.products, page: () => const ProductsPage()),
 ];
 
 // Map<String, Widget Function(BuildContext)> routess = {

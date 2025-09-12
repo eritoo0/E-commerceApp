@@ -120,7 +120,6 @@ class HomeControllerImplement extends HomeController {
   }
 
   @override
-  @override
   List getDiscountedProducts() {
     return products
         .where((product) =>
