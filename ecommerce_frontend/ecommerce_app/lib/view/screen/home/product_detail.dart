@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/controller/home/product_detail_controller.dart';
 import 'package:ecommerce_app/view/screen/home/full_screen_iamge_page.dart';
 import 'package:flutter/material.dart';
@@ -34,12 +35,12 @@ class ProductDetails extends StatelessWidget {
                     'product-${controller.productId}', // must match FullScreenImagePage
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                    controller.thumbnailUrl,
+                  child: CachedNetworkImage(
+                    imageUrl: controller.thumbnailUrl,
                     height: 250,
                     width: double.infinity,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) =>
+                    errorWidget: (context, error, stackTrace) =>
                         const Icon(Icons.image, size: 100),
                   ),
                 ),
@@ -73,12 +74,12 @@ class ProductDetails extends StatelessWidget {
                         tag: heroTag,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
-                            img["image_url"],
+                          child: CachedNetworkImage(
+                            imageUrl: img["image_url"],
                             width: 120,
                             height: 120,
                             fit: BoxFit.cover,
-                            errorBuilder: (context, error, stack) =>
+                            errorWidget: (context, error, stack) =>
                                 const Icon(Icons.image, size: 50),
                           ),
                         ),
@@ -109,7 +110,7 @@ class ProductDetails extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "\$${controller.price}",
+                  "\$${controller.price} DA",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

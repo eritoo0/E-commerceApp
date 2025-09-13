@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:ecommerce_app/core/constant/routes.dart';
 import 'package:flutter/material.dart';
@@ -57,11 +58,11 @@ class ProductGrid extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: const BorderRadius.vertical(
                             top: Radius.circular(12)),
-                        child: Image.network(
-                          product["thumbnail_url"] ?? "",
-                          fit: BoxFit.cover,
+                        child: CachedNetworkImage(
+                          imageUrl: product["thumbnail_url"] ?? "",
+                          fit: BoxFit.fill,
                           width: double.infinity,
-                          errorBuilder: (context, error, stackTrace) =>
+                          errorWidget: (context, error, stackTrace) =>
                               const Icon(Icons.image, size: 50),
                         ),
                       ),
@@ -82,6 +83,15 @@ class ProductGrid extends StatelessWidget {
                         "${product["price"]} DA",
                         style: const TextStyle(
                           color: Colors.green,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(
+                        product["short_description"],
+                        style: const TextStyle(
+                          color: Colors.white,
                         ),
                       ),
                     ),

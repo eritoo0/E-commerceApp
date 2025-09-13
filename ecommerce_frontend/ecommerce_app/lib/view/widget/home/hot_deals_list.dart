@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:ecommerce_app/core/constant/routes.dart';
 import 'package:flutter/material.dart';
@@ -51,10 +52,10 @@ class HotDealsList extends StatelessWidget {
                               ? ClipRRect(
                                   borderRadius: const BorderRadius.vertical(
                                       top: Radius.circular(12)),
-                                  child: Image.network(
-                                    product["thumbnail_url"],
+                                  child: CachedNetworkImage(
+                                    imageUrl: product["thumbnail_url"],
                                     width: double.infinity,
-                                    fit: BoxFit.cover,
+                                    fit: BoxFit.fill,
                                   ),
                                 )
                               : const Icon(Icons.image_not_supported, size: 80),
@@ -74,7 +75,7 @@ class HotDealsList extends StatelessWidget {
                             children: [
                               Flexible(
                                 child: Text(
-                                  "\$${product["price"]}",
+                                  "\$${product["price"]} DA",
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.red,
@@ -98,6 +99,15 @@ class HotDealsList extends StatelessWidget {
                                   ),
                                 ),
                             ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            product["short_description"],
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(color: ColorApp.bgColor),
                           ),
                         ),
                       ],
