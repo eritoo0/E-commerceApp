@@ -58,6 +58,8 @@ class ProductDetailsControllerImplement extends ProductDetailsController {
 
   String get thumbnailUrl => product["thumbnail_url"] ?? "";
 
+  int get productId => product["id"] as int;
+
   // ---------- Fetch full details ----------
   @override
   Future<void> fetchProductDetails() async {

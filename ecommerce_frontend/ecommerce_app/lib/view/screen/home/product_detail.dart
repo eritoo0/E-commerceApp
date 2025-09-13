@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/controller/home/product_detail_controller.dart';
+import 'package:ecommerce_app/view/screen/home/full_screen_iamge_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,17 +21,31 @@ class ProductDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ---------- Main Thumbnail ----------
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                controller.thumbnailUrl,
-                height: 250,
-                width: double.infinity,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    const Icon(Icons.image, size: 100),
+            // ---------- Main Thumbnail with Zoom ----------
+            GestureDetector(
+              onTap: () => Get.to(
+                () => FullScreenImagePage(
+                  imageUrl: controller.thumbnailUrl,
+                  heroTag: 'product-${controller.productId}', // unique tag
+                ),
+              ),
+              child: Hero(
+                tag:
+                    'product-${controller.productId}', // must match FullScreenImagePage
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    controller.thumbnailUrl,
+                    height: 250,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Icon(Icons.image, size: 100),
+                  ),
+                ),
               ),
             ),
+
             const SizedBox(height: 16),
 
             // ---------- Gallery Images ----------
@@ -46,15 +61,27 @@ class ProductDetails extends StatelessWidget {
                   separatorBuilder: (_, __) => const SizedBox(width: 10),
                   itemBuilder: (context, index) {
                     final img = controller.images[index];
-                    return ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        img["image_url"],
-                        width: 120,
-                        height: 120,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stack) =>
-                            const Icon(Icons.image, size: 50),
+                    final heroTag = 'gallery-${controller.productId}-$index';
+                    return GestureDetector(
+                      onTap: () => Get.to(
+                        () => FullScreenImagePage(
+                          imageUrl: img["image_url"],
+                          heroTag: heroTag,
+                        ),
+                      ),
+                      child: Hero(
+                        tag: heroTag,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.network(
+                            img["image_url"],
+                            width: 120,
+                            height: 120,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stack) =>
+                                const Icon(Icons.image, size: 50),
+                          ),
+                        ),
                       ),
                     );
                   },
