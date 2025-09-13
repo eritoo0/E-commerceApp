@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSize {
-  const HomeAppBar({super.key});
+  final IconButton? iconButton;
+  const HomeAppBar({super.key, this.iconButton});
 
   @override
   Size get preferredSize => const Size.fromHeight(96);
@@ -37,6 +38,10 @@ class HomeAppBar extends StatelessWidget implements PreferredSize {
           bottom: false,
           child: Row(
             children: [
+              if (iconButton != null) ...[
+                iconButton!,
+                const SizedBox(width: 12),
+              ],
               // Search field
               const Expanded(child: SearchField()),
 

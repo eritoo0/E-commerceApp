@@ -18,14 +18,20 @@ class CategoriesList extends StatelessWidget {
         itemCount: categories.length,
         itemBuilder: (context, index) {
           final category = categories[index];
-          final String categoryName = category["name"] ?? 'Batatata';
+          final String categoryName = //category["name"] ?? 'Batatata';
+              category["name"] != null && category["name"].toString().isNotEmpty
+                  ? category["name"].toString()
+                  : "batata";
           return GestureDetector(
             onTap: () {
               Get.toNamed(
                 AppRoute.products,
                 arguments: {
                   'categoryId': category['id'],
-                  'categoryName': category['name'] ?? 'Batata',
+                  'categoryName': category['name'] != null &&
+                          category['name'].toString().isNotEmpty
+                      ? category['name'].toString()
+                      : 'batata',
                 },
               );
             },
