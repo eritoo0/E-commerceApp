@@ -1,17 +1,21 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_app/core/class/status_request.dart';
 import 'package:ecommerce_app/data/datasource/remote/home_data.dart';
 
 abstract class ProductsController extends GetxController {
   Future<void> fetchProducts({bool refresh});
+  onSearch(String query);
 }
 
 class ProductsControllerImplement extends ProductsController {
   final int categoryId;
+
   ProductsControllerImplement(this.categoryId);
 
   final HomeData homeData = HomeData(Get.find());
 
+  late TextEditingController searchController;
   List products = [];
   int currentPage = 1;
   bool hasMore = true;
@@ -20,7 +24,14 @@ class ProductsControllerImplement extends ProductsController {
   @override
   void onInit() {
     super.onInit();
+    searchController = TextEditingController();
     fetchProducts(refresh: true);
+  }
+
+  @override
+  void onClose() {
+    searchController.dispose();
+    super.onClose();
   }
 
   @override
@@ -56,5 +67,11 @@ class ProductsControllerImplement extends ProductsController {
     }
 
     update();
+  }
+
+  @override
+  void onSearch(String query) {
+    // Optional: filter products or call API
+    print(searchController.text);
   }
 }

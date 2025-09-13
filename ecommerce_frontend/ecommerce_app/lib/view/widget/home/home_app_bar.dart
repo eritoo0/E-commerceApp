@@ -1,12 +1,13 @@
 import 'package:ecommerce_app/core/constant/color.dart';
-import 'package:ecommerce_app/view/widget/home/searchbar.dart';
+
 import 'package:ecommerce_app/view/widget/home/icon_with_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSize {
   final IconButton? iconButton;
-  const HomeAppBar({super.key, this.iconButton});
+  final Widget searchWidget;
+  const HomeAppBar({super.key, this.iconButton, required this.searchWidget});
 
   @override
   Size get preferredSize => const Size.fromHeight(96);
@@ -43,7 +44,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSize {
                 const SizedBox(width: 12),
               ],
               // Search field
-              const Expanded(child: SearchField()),
+              Expanded(child: searchWidget),
 
               const SizedBox(width: 12),
 

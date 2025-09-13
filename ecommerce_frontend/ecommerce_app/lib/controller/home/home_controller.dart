@@ -48,6 +48,7 @@ class HomeControllerImplement extends HomeController {
   @override
   void onClose() {
     searchController.dispose();
+    searchController.clear();
     super.onClose();
   }
 

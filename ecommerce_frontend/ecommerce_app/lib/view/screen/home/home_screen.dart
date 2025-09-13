@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/view/screen/home/home.dart';
 import 'package:ecommerce_app/view/widget/home/home_bottom_nav_bar.dart';
+import 'package:ecommerce_app/view/widget/home/search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
@@ -25,7 +26,9 @@ class HomeScreen extends StatelessWidget {
       return Scaffold(
         backgroundColor: ColorApp.bgColor,
         appBar: index == 0
-            ? const HomeAppBar()
+            ? const HomeAppBar(
+                searchWidget: SearchField(),
+              )
             : AppBar(
                 title: Text(
                   ["Favorite", "Cart", "Profile"][index - 1],
