@@ -1,8 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecommerce_app/core/constant/color.dart';
-import 'package:ecommerce_app/core/constant/routes.dart';
+import 'package:ecommerce_app/view/widget/home/hot_deals_card.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class HotDealsList extends StatelessWidget {
   final List products;
@@ -26,95 +23,13 @@ class HotDealsList extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 220,
+          height: 280,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: products.length,
             itemBuilder: (context, index) {
               final product = products[index];
-              return GestureDetector(
-                onTap: () {
-                  Get.toNamed(AppRoute.productDetails, arguments: product);
-                },
-                child: Container(
-                  width: 180,
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Card(
-                    color: ColorApp.primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: product["thumbnail_url"] != null
-                              ? ClipRRect(
-                                  borderRadius: const BorderRadius.vertical(
-                                      top: Radius.circular(12)),
-                                  child: CachedNetworkImage(
-                                    imageUrl: product["thumbnail_url"],
-                                    width: double.infinity,
-                                    fit: BoxFit.fill,
-                                  ),
-                                )
-                              : const Icon(Icons.image_not_supported, size: 80),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            product["name"] ?? "Unnamed",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  "\$${product["price"]} DA",
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red,
-                                  ),
-                                  overflow: TextOverflow
-                                      .ellipsis, // 👈 prevent overflow
-                                ),
-                              ),
-                              const SizedBox(width: 6),
-                              if (product["old_price"] != null)
-                                Flexible(
-                                  child: Text(
-                                    "\$${product["old_price"]}",
-                                    style: const TextStyle(
-                                      decoration: TextDecoration.lineThrough,
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
-                                    overflow: TextOverflow
-                                        .ellipsis, // 👈 prevent overflow
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            product["short_description"],
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(color: ColorApp.bgColor),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
+              return HotDealCard(product: product);
             },
           ),
         ),

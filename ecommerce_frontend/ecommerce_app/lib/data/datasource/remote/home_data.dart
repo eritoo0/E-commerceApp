@@ -22,6 +22,7 @@ class HomeData {
   }
 
   /// Fetch products with pagination and optional category filter
+  /// // need a page alone
   Future<dynamic> getProducts({int page = 1, int? categoryId}) async {
     String url = "${AppLink.products}?page=$page";
 

@@ -39,7 +39,7 @@ class ProductDetails extends StatelessWidget {
                     imageUrl: controller.thumbnailUrl,
                     height: 250,
                     width: double.infinity,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                     errorWidget: (context, error, stackTrace) =>
                         const Icon(Icons.image, size: 100),
                   ),

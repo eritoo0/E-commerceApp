@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/controller/home/home_controller.dart';
+import 'package:ecommerce_app/controller/home/home_screen_controller.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +8,7 @@ class SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeControllerImplement>(
+    return GetBuilder<HomeScreenControllerImplement>(
         builder: (controller) => Container(
               height: 44,
               decoration: BoxDecoration(
