@@ -114,7 +114,7 @@ class ProductCard extends StatelessWidget {
                       const Icon(Icons.star, size: 16, color: Colors.amber),
                       const SizedBox(width: 3),
                       Text(
-                        (product["rating"] ?? 0).toStringAsFixed(1),
+                        (product["average_rating"] ?? 0).toStringAsFixed(1),
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,

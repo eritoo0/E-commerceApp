@@ -129,7 +129,7 @@ class HotDealCard extends StatelessWidget {
                         const Icon(Icons.star, size: 14, color: Colors.amber),
                         const SizedBox(width: 4),
                         Text(
-                          product["rating"]?.toString() ?? "0.0",
+                          product["average_rating"]?.toString() ?? "0.0",
                           style: const TextStyle(fontSize: 12),
                         ),
                       ],

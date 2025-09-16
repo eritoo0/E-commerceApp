@@ -1,8 +1,12 @@
 from django.db import models
+from django.conf import settings
 from django.utils.text import slugify
 from parler.models import TranslatableModel, TranslatedFields
 from decimal import Decimal
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator , MaxValueValidator
+
+
+User = settings.AUTH_USER_MODEL
 
 class Category(TranslatableModel):
     translations = TranslatedFields(
@@ -101,3 +105,37 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"Image for product {self.product_id}"
+    
+
+class Favorite(models.Model):
+    """Each row = 1 user likes 1 product."""
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name="favorites")
+    product = models.ForeignKey("Product", on_delete=models.CASCADE,
+                                related_name="favorited_by")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("user", "product")     # user can like only once
+
+    def __str__(self):
+        return f"{self.user} ❤ {self.product}"
+
+
+class ProductRating(models.Model):
+    """A 1–5 star rating given by a user to a product."""
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name="product_ratings")
+    product = models.ForeignKey("Product", on_delete=models.CASCADE,
+                                related_name="ratings")
+    score = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)]
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("user", "product")     # one rating per user/product
+
+    def __str__(self):
+        return f"{self.product} rated {self.score} by {self.user}"

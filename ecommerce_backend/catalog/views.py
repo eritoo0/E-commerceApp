@@ -1,9 +1,13 @@
-from rest_framework import viewsets, filters
+from rest_framework import viewsets, filters ,status, permissions
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.utils import translation
-from .models import Category, Product
+from django.db.models import Avg, Count      
+from .models import Category, Product, Favorite, ProductRating
 from .serializers import CategoryLiteSerializer, ProductLiteSerializer  , ProductDetailSerializer
+#from django.db.models import 
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Category.objects.filter(is_active=True)
@@ -60,6 +64,10 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         qs = super().get_queryset()
+        qs = qs.annotate(
+            average_rating=Avg("ratings__score"),
+            rating_count=Count("ratings")
+        )
         # Prefetch gallery only for detail action (retrieve)
         if getattr(self, "action", None) == "retrieve":
             return qs.prefetch_related("images")
@@ -69,3 +77,37 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         if getattr(self, "action", None) == "retrieve":
             return ProductDetailSerializer
         return ProductLiteSerializer
+    
+    @action(detail=True, methods=["post"],
+            permission_classes=[permissions.IsAuthenticated])
+    def favorite(self, request, pk=None):
+        """Toggle favorite on/off for the current user."""
+        product = self.get_object()
+        fav, created = Favorite.objects.get_or_create(
+            user=request.user, product=product
+        )
+        if not created:
+            fav.delete()
+            return Response({"favorited": False})
+        return Response({"favorited": True})
+
+    @action(detail=True, methods=["post"],
+            permission_classes=[permissions.IsAuthenticated])
+    def rate(self, request, pk=None):
+        """Create or update a 1–5 star rating."""
+        product = self.get_object()
+        score = int(request.data.get("score", 0))
+        if score < 1 or score > 5:
+            return Response({"detail": "Score must be 1–5"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        rating, _ = ProductRating.objects.update_or_create(
+            user=request.user, product=product,
+            defaults={"score": score}
+        )
+        return Response({
+            "score": rating.score,
+            "average": product.ratings.aggregate(avg=models.Avg("score"))["avg"],
+            "count": product.ratings.count(),
+        })    
+    

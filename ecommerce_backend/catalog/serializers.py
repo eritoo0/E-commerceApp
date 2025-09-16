@@ -52,6 +52,9 @@ class ProductLiteSerializer(serializers.ModelSerializer):
     category = serializers.PrimaryKeyRelatedField(read_only=True)
     category_name = serializers.SerializerMethodField()
     discount_percent = serializers.IntegerField(read_only=True)
+    is_favorite = serializers.SerializerMethodField()
+    average_rating = serializers.FloatField(read_only=True)
+    rating_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Product
@@ -61,6 +64,7 @@ class ProductLiteSerializer(serializers.ModelSerializer):
             "stock", "thumbnail", "thumbnail_url",
             "category", "category_name",
             "is_active", "created_at",
+            "is_favorite", "average_rating", "rating_count",
         ]
 
     def get_name(self, obj):
@@ -76,6 +80,12 @@ class ProductLiteSerializer(serializers.ModelSerializer):
         if not obj.category_id:
             return None
         return obj.category.safe_translation_getter("name", any_language=True)
+    
+    def get_is_favorite(self, obj):
+        user = self.context["request"].user
+        if not user.is_authenticated:
+            return False
+        return obj.favorited_by.filter(user=user).exists()
 
 
 # ---------- Product (Detail) with full description + gallery ----------
