@@ -1,20 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
+
+import 'package:ecommerce_app/controller/home/favorite_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProductCard extends StatelessWidget {
   final Map<String, dynamic> product;
   final VoidCallback? onTap;
-  final VoidCallback? onFavorite;
 
   const ProductCard({
     super.key,
     required this.product,
     this.onTap,
-    this.onFavorite,
   });
 
   @override
   Widget build(BuildContext context) {
+    final favCtrl = Get.find<FavoritesController>();
+    final int id = product["id"];
     return GestureDetector(
       onTap: onTap,
       child: Card(
@@ -59,19 +62,20 @@ class ProductCard extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 18,
                       backgroundColor: Colors.black.withOpacity(0.4),
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: onFavorite,
-                        icon: Icon(
-                          product["is_favorite"] == true
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          color: product["is_favorite"] == true
-                              ? Colors.red
-                              : Colors.white,
-                          size: 18,
-                        ),
-                      ),
+                      child: Obx(() {
+                        final isFav = favCtrl.favorites[id] ?? false;
+
+                        (product["is_favorite"] == true);
+                        return IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () => favCtrl.toggle(id),
+                          icon: Icon(
+                            isFav ? Icons.favorite : Icons.favorite_border,
+                            color: isFav ? Colors.red : Colors.white,
+                            size: 18,
+                          ),
+                        );
+                      }),
                     ),
                   ),
                 ],

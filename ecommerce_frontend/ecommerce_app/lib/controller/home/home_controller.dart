@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/controller/home/favorite_controller.dart';
 import 'package:ecommerce_app/core/class/status_request.dart';
 import 'package:ecommerce_app/core/services/services.dart';
 import 'package:ecommerce_app/data/datasource/remote/home_data.dart';
@@ -11,13 +12,13 @@ abstract class HomeController extends GetxController {
   getDiscountedProducts();
   onSearch(String query);
   filterByCategory(int? categoryId);
-  toggleFavorite(int index);
 }
 
 class HomeControllerImplement extends HomeController {
   MyServices myServices = Get.find();
 
   HomeData homeData = HomeData(Get.find());
+  final favCtrl = Get.find<FavoritesController>();
 
   late TextEditingController searchController;
 
@@ -90,21 +91,38 @@ class HomeControllerImplement extends HomeController {
     statusRequest = StatusRequest.loading;
     update();
 
-    var response = await homeData.getProducts(
+    final response = await homeData.getProducts(
       page: currentPage,
       categoryId: selectedCategoryId,
     );
 
+    final favCtrl = Get.find<FavoritesController>();
+
     if (response is StatusRequest) {
-      statusRequest = response; // error
+      // API error
+      statusRequest = response;
     } else {
       statusRequest = StatusRequest.success;
 
-      // Django pagination response
-      final List newProducts = response["results"];
-      products.addAll(newProducts);
+      final List newProducts = response["results"] ?? [];
 
-      // check if more pages exist
+      // Filter out duplicates
+      final List uniqueProducts = [];
+      for (var product in newProducts) {
+        final id = product["id"];
+        if (!products.any((p) => p["id"] == id)) {
+          uniqueProducts.add(product);
+
+          // Initialize favorites if not already present
+          if (!favCtrl.favorites.containsKey(id)) {
+            favCtrl.favorites[id] = product["is_favorite"] ?? false;
+          }
+        }
+      }
+
+      products.addAll(uniqueProducts);
+
+      // Pagination check
       if (response["next"] == null) {
         hasMore = false;
       } else {
@@ -128,20 +146,5 @@ class HomeControllerImplement extends HomeController {
             product["discount_percent"] != null &&
             product["discount_percent"] > 0)
         .toList();
-  }
-
-  @override
-  void toggleFavorite(int index) async {
-    final item = products[index] as Map<String, dynamic>;
-    final current = item["is_favorite"] == true;
-
-    item["is_favorite"] = !current;
-    update();
-
-    final res = await homeData.toggleFavorite(item["id"]);
-    if (res is StatusRequest) {
-      item["is_favorite"] = current;
-      update();
-    }
   }
 }

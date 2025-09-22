@@ -77,7 +77,6 @@ class _HomeState extends State<Home> {
             ProductGrid(
               products: controller.products,
               scrollController: _scrollController,
-              onFavorite: controller.toggleFavorite,
             ),
             if (controller.statusRequest == StatusRequest.loading &&
                 controller.products.isNotEmpty)

@@ -3,8 +3,10 @@ import 'package:ecommerce_app/controller/auth/forgetpassword/resetpassword_contr
 import 'package:ecommerce_app/controller/auth/forgetpassword/verifycode_controller.dart';
 import 'package:ecommerce_app/controller/auth/login_controller.dart';
 import 'package:ecommerce_app/controller/auth/signup_controller.dart';
+import 'package:ecommerce_app/controller/home/favorite_controller.dart';
 import 'package:ecommerce_app/controller/home/home_controller.dart';
 import 'package:ecommerce_app/core/class/crud.dart';
+import 'package:ecommerce_app/data/datasource/remote/home_data.dart';
 import 'package:get/get.dart';
 
 class MyBindings extends Bindings {
@@ -26,5 +28,12 @@ class MyBindings extends Bindings {
     Get.lazyPut<HomeControllerImplement>(() => HomeControllerImplement(),
         fenix: true);
     Get.lazyPut<Crud>(() => Crud(), fenix: true);
+    Get.lazyPut<HomeData>(() => HomeData(Get.find<Crud>()), fenix: true);
+
+    // Global Favorites controller with HomeData injected
+    Get.lazyPut<FavoritesController>(
+      () => FavoritesController(Get.find<HomeData>()),
+      fenix: true,
+    );
   }
 }

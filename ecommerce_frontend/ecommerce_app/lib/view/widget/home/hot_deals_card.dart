@@ -1,15 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce_app/controller/home/favorite_controller.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:ecommerce_app/core/constant/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HotDealCard extends StatelessWidget {
-  final Map product;
+  //final Map product;
+  final Map<String, dynamic> product;
+
   const HotDealCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
+    final favCtrl = Get.find<FavoritesController>();
+    final int id = product["id"];
+
     return GestureDetector(
       onTap: () => Get.toNamed(AppRoute.productDetails, arguments: product),
       child: SizedBox(
@@ -49,21 +55,22 @@ class HotDealCard extends StatelessWidget {
                       top: 6,
                       right: 6,
                       child: CircleAvatar(
-                        radius: 16,
+                        radius: 18,
                         backgroundColor: Colors.black.withOpacity(0.4),
-                        child: IconButton(
-                          padding: EdgeInsets.zero,
-                          icon: Icon(
-                            product["is_favorite"] == true
-                                ? Icons.favorite
-                                : Icons.favorite_border_outlined,
-                            color: product["is_favorite"] == true
-                                ? Colors.red
-                                : Colors.white,
-                            size: 18,
-                          ),
-                          onPressed: () {},
-                        ),
+                        child: Obx(() {
+                          final isFav = favCtrl.favorites[id] ?? false;
+
+                          (product["is_favorite"] == true);
+                          return IconButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: () => favCtrl.toggle(id),
+                            icon: Icon(
+                              isFav ? Icons.favorite : Icons.favorite_border,
+                              color: isFav ? Colors.red : Colors.white,
+                              size: 18,
+                            ),
+                          );
+                        }),
                       ),
                     ),
                   ],

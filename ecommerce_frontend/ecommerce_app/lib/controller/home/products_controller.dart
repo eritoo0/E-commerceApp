@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/controller/home/favorite_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_app/core/class/status_request.dart';
@@ -6,7 +7,6 @@ import 'package:ecommerce_app/data/datasource/remote/home_data.dart';
 abstract class ProductsController extends GetxController {
   Future<void> fetchProducts({bool refresh});
   onSearch(String query);
-  toggleFavorite(int index);
 }
 
 class ProductsControllerImplement extends ProductsController {
@@ -42,6 +42,7 @@ class ProductsControllerImplement extends ProductsController {
       products.clear();
       hasMore = true;
     }
+
     if (!hasMore) return;
 
     statusRequest = StatusRequest.loading;
@@ -53,13 +54,31 @@ class ProductsControllerImplement extends ProductsController {
     );
 
     if (response is StatusRequest) {
-      // handle error
+      // API error
       statusRequest = response;
     } else {
       statusRequest = StatusRequest.success;
-      products.addAll(response['results'] ?? []);
 
-      // pagination check
+      final List newProducts = response['results'] ?? [];
+
+      // Add only products that don't exist yet
+      final List uniqueProducts = [];
+      for (var product in newProducts) {
+        final id = product['id'];
+        if (!products.any((p) => p['id'] == id)) {
+          uniqueProducts.add(product);
+
+          // Initialize favorite if not already set
+          final favCtrl = Get.find<FavoritesController>();
+          if (!favCtrl.favorites.containsKey(id)) {
+            favCtrl.favorites[id] = product['is_favorite'] ?? false;
+          }
+        }
+      }
+
+      products.addAll(uniqueProducts);
+
+      // Pagination check
       if (response['next'] == null) {
         hasMore = false;
       } else {
@@ -68,21 +87,6 @@ class ProductsControllerImplement extends ProductsController {
     }
 
     update();
-  }
-
-  @override
-  void toggleFavorite(int index) async {
-    final item = products[index] as Map<String, dynamic>;
-    final current = item["is_favorite"] == true;
-
-    item["is_favorite"] = !current;
-    update();
-
-    final res = await homeData.toggleFavorite(item["id"]);
-    if (res is StatusRequest) {
-      item["is_favorite"] = current;
-      update();
-    }
   }
 
   @override

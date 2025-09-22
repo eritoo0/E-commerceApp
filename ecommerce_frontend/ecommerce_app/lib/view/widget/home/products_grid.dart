@@ -6,12 +6,10 @@ import 'package:get/get.dart';
 class ProductGrid extends StatelessWidget {
   final List products;
   final ScrollController? scrollController;
-  final Function(int)? onFavorite;
 
   const ProductGrid({
     super.key,
     required this.products,
-    required this.onFavorite,
     this.scrollController,
   });
 
@@ -45,7 +43,6 @@ class ProductGrid extends StatelessWidget {
               product: product,
               onTap: () =>
                   Get.toNamed(AppRoute.productDetails, arguments: product),
-              onFavorite: () => onFavorite?.call(index),
             );
           },
         ),
