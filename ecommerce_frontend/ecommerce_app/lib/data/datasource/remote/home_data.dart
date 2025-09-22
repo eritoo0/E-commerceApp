@@ -14,7 +14,7 @@ class HomeData {
         if (category["image_url"] != null) {
           category["image_url"] = category["image_url"]
               .toString()
-              .replaceFirst("127.0.0.1", "192.168.1.11");
+              .replaceFirst("127.0.0.1", "127.0.0.1");
         }
       }
       return r;
@@ -37,10 +37,18 @@ class HomeData {
         if (product["thumbnail_url"] != null) {
           product["thumbnail_url"] = product["thumbnail_url"]
               .toString()
-              .replaceFirst("127.0.0.1", "192.168.1.11");
+              .replaceFirst("127.0.0.1", "127.0.0.1");
         }
       }
       return r;
     });
+  }
+
+  // home_data.dart
+  Future<dynamic> toggleFavorite(int productId) async {
+    final url =
+        "${AppLink.products}$productId/favorite/"; // e.g. /api/favorites/1/
+    final response = await crud.postData(url, {}, withAuth: true);
+    return response.fold((l) => l, (r) => r);
   }
 }

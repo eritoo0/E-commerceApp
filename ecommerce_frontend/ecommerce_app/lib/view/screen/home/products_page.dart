@@ -53,6 +53,7 @@ class ProductsPage extends StatelessWidget {
               return ProductGrid(
                 products: controller.products,
                 scrollController: scrollController,
+                onFavorite: controller.toggleFavorite,
               );
             },
           ),

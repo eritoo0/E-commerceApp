@@ -6,6 +6,7 @@ import 'package:ecommerce_app/data/datasource/remote/home_data.dart';
 abstract class ProductsController extends GetxController {
   Future<void> fetchProducts({bool refresh});
   onSearch(String query);
+  toggleFavorite(int index);
 }
 
 class ProductsControllerImplement extends ProductsController {
@@ -67,6 +68,21 @@ class ProductsControllerImplement extends ProductsController {
     }
 
     update();
+  }
+
+  @override
+  void toggleFavorite(int index) async {
+    final item = products[index] as Map<String, dynamic>;
+    final current = item["is_favorite"] == true;
+
+    item["is_favorite"] = !current;
+    update();
+
+    final res = await homeData.toggleFavorite(item["id"]);
+    if (res is StatusRequest) {
+      item["is_favorite"] = current;
+      update();
+    }
   }
 
   @override

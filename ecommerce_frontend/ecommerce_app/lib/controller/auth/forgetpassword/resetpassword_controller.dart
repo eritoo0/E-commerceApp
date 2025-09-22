@@ -61,11 +61,14 @@ class ResetpasswordControllerImplement extends ResetpasswordController {
     update();
 
     try {
-      final res = await crud.postData(AppLink.resetPassword, {
-        "email": email,
-        "verifycode": verifycode, // or "reset_token": resetToken
-        "new_password": p1,
-      });
+      final res = await crud.postData(
+          AppLink.resetPassword,
+          {
+            "email": email,
+            "verifycode": verifycode, // or "reset_token": resetToken
+            "new_password": p1,
+          },
+          withAuth: false);
 
       res.fold(
         (err) {

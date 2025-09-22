@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/controller/home/home_controller.dart';
 import 'package:ecommerce_app/core/class/status_request.dart';
+import 'package:ecommerce_app/core/services/services.dart';
 import 'package:ecommerce_app/view/widget/home/categories_list.dart';
 import 'package:ecommerce_app/view/widget/home/hot_deals_list.dart';
 import 'package:ecommerce_app/view/widget/home/offer_banner.dart';
@@ -53,6 +54,21 @@ class _HomeState extends State<Home> {
         return ListView(
           controller: _scrollController,
           children: [
+            Padding(
+                padding: const EdgeInsets.all(15),
+                child: ElevatedButton(
+                    onPressed: () async {
+                      final myServices = Get.find<MyServices>();
+                      await myServices.sharedPreferences.remove('token');
+                      await myServices.sharedPreferences.remove('access');
+                      await myServices.sharedPreferences.remove('refresh');
+                      await myServices.sharedPreferences.remove('id');
+                      await myServices.sharedPreferences.remove('username');
+                      await myServices.sharedPreferences.remove('email');
+                      await myServices.sharedPreferences.remove('phone');
+                      Get.offAllNamed('/login');
+                    },
+                    child: const Text("logout"))),
             const OfferBanner(),
             const SizedBox(height: 20),
             CategoriesList(categories: controller.categories),
@@ -61,6 +77,7 @@ class _HomeState extends State<Home> {
             ProductGrid(
               products: controller.products,
               scrollController: _scrollController,
+              onFavorite: controller.toggleFavorite,
             ),
             if (controller.statusRequest == StatusRequest.loading &&
                 controller.products.isNotEmpty)

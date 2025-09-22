@@ -11,7 +11,7 @@ import 'package:ecommerce_app/view/screen/auth/verify_code_signup.dart';
 import 'package:ecommerce_app/view/screen/home/home.dart';
 import 'package:ecommerce_app/view/screen/home/home_screen.dart';
 import 'package:ecommerce_app/view/screen/home/product_detail.dart';
-import 'package:ecommerce_app/view/screen/home/products.dart';
+import 'package:ecommerce_app/view/screen/home/products_page.dart';
 import 'package:ecommerce_app/view/screen/language.dart';
 import 'package:ecommerce_app/view/screen/onboarding.dart';
 import 'package:get/get.dart';
@@ -22,6 +22,7 @@ List<GetPage<dynamic>>? routes = [
       name: AppRoute.language,
       page: () => const Language(),
       middlewares: [MyMiddleware()]),
+
   GetPage(name: AppRoute.login, page: () => const Login()),
 
   GetPage(name: AppRoute.signUp, page: () => const SignUp()),

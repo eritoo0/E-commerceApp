@@ -2,6 +2,7 @@ class AppLink {
   static const String server = "http://127.0.0.1:8000/";
   static const String api = "${server}api/";
   static const String users = "${api}users/";
+  static const String refreshToken = "${api}token/refresh/";
 
   // Auth flow
   static const String signup = "${users}signup/"; // POST

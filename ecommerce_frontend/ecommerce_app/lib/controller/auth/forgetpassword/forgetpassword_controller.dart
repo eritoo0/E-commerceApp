@@ -37,7 +37,8 @@ class ForgetpasswordControllerImplement extends ForgetpasswordController {
     final email = emailController.text.trim().toLowerCase();
 
     try {
-      final res = await crud.postData(AppLink.forgetPassword, {"email": email});
+      final res = await crud.postData(AppLink.forgetPassword, {"email": email},
+          withAuth: false);
       res.fold(
         (err) {
           isLoading.value = false;

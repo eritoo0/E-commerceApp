@@ -85,11 +85,14 @@ class LoginControllerImplement extends LoginController {
     final password = passwordController.text;
 
     try {
-      final res = await crud.postData(AppLink.login, {
-        // Backend expects email because USERNAME_FIELD='email'
-        "email": email,
-        "password": password,
-      });
+      final res = await crud.postData(
+          AppLink.login,
+          {
+            // Backend expects email because USERNAME_FIELD='email'
+            "email": email,
+            "password": password,
+          },
+          withAuth: false);
 
       res.fold(
         (err) {
@@ -107,12 +110,15 @@ class LoginControllerImplement extends LoginController {
         (data) {
           isLoading.value = false;
           update();
+          print('Login raw response: $data');
 
           // Typical DRF responses:
           // success => {"token": "..."} or {"auth_token": "..."} or {"key": "..."} + maybe user object
           // error   => {"detail": "..."} or {"non_field_errors": ["..."]} or {"email": ["..."]}
 
           final token = data["token"] ?? data["auth_token"] ?? data["key"];
+          final access = data['access'];
+          final refresh = data['refresh'];
           final detail = data["detail"]?.toString();
           final nonField = (data["non_field_errors"] is List &&
                   data["non_field_errors"].isNotEmpty)
@@ -121,6 +127,12 @@ class LoginControllerImplement extends LoginController {
           final emailErr = (data["email"] is List && data["email"].isNotEmpty)
               ? data["email"][0].toString()
               : null;
+          if (access != null) {
+            myServices.sharedPreferences.setString('access', access);
+          }
+          if (refresh != null) {
+            myServices.sharedPreferences.setString('refresh', refresh);
+          }
 
           if (token != null) {
             // Optional: persist token for authenticated requests

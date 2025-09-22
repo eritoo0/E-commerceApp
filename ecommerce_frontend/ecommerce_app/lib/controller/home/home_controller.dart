@@ -11,6 +11,7 @@ abstract class HomeController extends GetxController {
   getDiscountedProducts();
   onSearch(String query);
   filterByCategory(int? categoryId);
+  toggleFavorite(int index);
 }
 
 class HomeControllerImplement extends HomeController {
@@ -127,5 +128,20 @@ class HomeControllerImplement extends HomeController {
             product["discount_percent"] != null &&
             product["discount_percent"] > 0)
         .toList();
+  }
+
+  @override
+  void toggleFavorite(int index) async {
+    final item = products[index] as Map<String, dynamic>;
+    final current = item["is_favorite"] == true;
+
+    item["is_favorite"] = !current;
+    update();
+
+    final res = await homeData.toggleFavorite(item["id"]);
+    if (res is StatusRequest) {
+      item["is_favorite"] = current;
+      update();
+    }
   }
 }

@@ -54,10 +54,9 @@ class VerifycodeControllerImplement extends VerifycodeController {
     isLoading.value = true;
 
     try {
-      final res = await crud.postData(AppLink.verifyResetCode, {
-        "email": email,
-        "verifycode": code,
-      });
+      final res = await crud.postData(
+          AppLink.verifyResetCode, {"email": email, "verifycode": code},
+          withAuth: false);
 
       res.fold(
         (err) {
