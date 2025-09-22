@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/core/class/status_request.dart';
 import 'package:ecommerce_app/core/functions/checkinternet.dart';
 import 'package:ecommerce_app/core/services/services.dart'; // <-- needed for MyServices
-import 'package:ecommerce_app/linkapi.dart';
+//import 'package:ecommerce_app/linkapi.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -84,21 +84,21 @@ class Crud {
     }
   }
 
-  Future<bool> refreshToken() async {
-    final refresh = myServices.sharedPreferences.getString('refresh');
-    if (refresh == null) return false;
+  // Future<bool> refreshToken() async {
+  //   final refresh = myServices.sharedPreferences.getString('refresh');
+  //   if (refresh == null) return false;
 
-    final res = await http.post(
-      Uri.parse(AppLink.refreshToken),
-      body: jsonEncode({'refresh': refresh}),
-      headers: {'Content-Type': 'application/json'},
-    );
+  //   final res = await http.post(
+  //     Uri.parse(AppLink.refreshToken),
+  //     body: jsonEncode({'refresh': refresh}),
+  //     headers: {'Content-Type': 'application/json'},
+  //   );
 
-    if (res.statusCode == 200) {
-      final body = jsonDecode(res.body);
-      myServices.sharedPreferences.setString('access', body['access']);
-      return true;
-    }
-    return false;
-  }
+  //   if (res.statusCode == 200) {
+  //     final body = jsonDecode(res.body);
+  //     myServices.sharedPreferences.setString('access', body['access']);
+  //     return true;
+  //   }
+  //   return false;
+  // }
 }

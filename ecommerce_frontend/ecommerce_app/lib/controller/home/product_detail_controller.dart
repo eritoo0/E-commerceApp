@@ -1,19 +1,31 @@
 import 'package:ecommerce_app/linkapi.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get_rx/get_rx.dart';
 
 abstract class ProductDetailsController extends GetxController {
   addToCart();
   fetchProductDetails();
   stockLabel(int stock);
+  increaseQty();
+  decreaseQty();
+  buyNow();
 }
 
 class ProductDetailsControllerImplement extends ProductDetailsController {
   final Map product; // passed from list page
+  final RxInt quantity = 1.obs;
+  final RxString selectedColor = ''.obs;
+  final RxString selectedSize = ''.obs;
+  RxBool isDescriptionExpanded = false.obs;
 
-  var stock = 0.obs;
+  RxInt stock = 0.obs;
   var images = [].obs; // gallery images
   var description = "".obs;
+  bool requiresSize = true; // product['brand_requires_size']
+  // from api
+  List<String> availableColors = ['Red', 'Blue', 'Black'];
+  List<String> availableSizes = ['S', 'M', 'L', 'XL'];
 
   ProductDetailsControllerImplement(this.product) {
     stock.value = product["stock"] ?? 0;
@@ -78,4 +90,18 @@ class ProductDetailsControllerImplement extends ProductDetailsController {
       print("Error fetching product details: $e");
     }
   }
+
+  @override
+  void increaseQty() => quantity.value++;
+  @override
+  void decreaseQty() {
+    if (quantity.value > 1) quantity.value--;
+  }
+
+  void toggleDescription() {
+    isDescriptionExpanded.value = !isDescriptionExpanded.value;
+  }
+
+  @override
+  void buyNow() {}
 }
