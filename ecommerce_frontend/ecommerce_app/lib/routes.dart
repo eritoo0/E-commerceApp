@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/controller/home_screen/profile/profile_screen.dart';
+import 'package:ecommerce_app/view/screen/home_screen/profile/profile_screen.dart';
 import 'package:ecommerce_app/core/constant/routes.dart';
 import 'package:ecommerce_app/core/middleware/middleware.dart';
 import 'package:ecommerce_app/view/screen/auth/forgetpassword/forgetpassword.dart';

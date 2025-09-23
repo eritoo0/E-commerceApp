@@ -22,9 +22,13 @@ class FavoritesController extends GetxController {
     final current = favorites[productId] ?? false;
     favorites[productId] = !current;
 
+    // Force rebuild for GetBuilder listeners
+    update();
+
     final res = await _homeData.toggleFavorite(productId);
     if (res is StatusRequest) {
       favorites[productId] = current;
+      update(); // update again if we reverted
     }
   }
 }

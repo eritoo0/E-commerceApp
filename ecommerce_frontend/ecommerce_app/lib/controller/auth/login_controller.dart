@@ -161,7 +161,7 @@ class LoginControllerImplement extends LoginController {
 
             _snack("Welcome", "Signed in successfully");
 
-            Get.offAllNamed(AppRoute.home);
+            Get.offAllNamed(AppRoute.homeScreen);
             return;
           }
 
