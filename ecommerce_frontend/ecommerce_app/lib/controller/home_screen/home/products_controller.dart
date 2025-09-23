@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/controller/home/favorite_controller.dart';
+import 'package:ecommerce_app/controller/home_screen/favorite/favorite_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_app/core/class/status_request.dart';

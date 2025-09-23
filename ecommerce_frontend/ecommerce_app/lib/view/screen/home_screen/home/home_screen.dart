@@ -1,11 +1,13 @@
-import 'package:ecommerce_app/view/screen/home/home.dart';
+import 'package:ecommerce_app/view/screen/home_screen/cart/cart_screen.dart';
+import 'package:ecommerce_app/view/screen/home_screen/favorite/favorite_screen.dart';
+import 'package:ecommerce_app/view/screen/home_screen/home/home.dart';
 import 'package:ecommerce_app/view/widget/home/home_bottom_nav_bar.dart';
 import 'package:ecommerce_app/view/widget/home/search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:ecommerce_app/view/widget/home/home_app_bar.dart';
-import 'package:ecommerce_app/controller/home/home_screen_controller.dart';
+import 'package:ecommerce_app/controller/home_screen/home/home_screen_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,8 +18,8 @@ class HomeScreen extends StatelessWidget {
 
     const pages = [
       Home(),
-      Center(child: Text("Favorite Page")),
-      Center(child: Text("Cart Page")),
+      FavoritesScreen(),
+      CartScreen(),
       Center(child: Text("Profile Page")),
     ];
 

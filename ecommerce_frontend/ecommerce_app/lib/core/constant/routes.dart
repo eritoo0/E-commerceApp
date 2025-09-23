@@ -16,6 +16,12 @@ class AppRoute {
   static const String homeScreen = "/homeScreen";
   static const String products = "/products";
 
+  // favorite
+  static const String favorite = "/favorite";
+
+  //cart
+  static const String cart = "/cart";
+
   //language
   static const String language = "/";
 

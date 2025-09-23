@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/controller/home/home_controller.dart';
+import 'package:ecommerce_app/controller/home_screen/home/home_controller.dart';
 import 'package:ecommerce_app/core/class/status_request.dart';
 import 'package:ecommerce_app/core/services/services.dart';
 import 'package:ecommerce_app/view/widget/home/categories_list.dart';

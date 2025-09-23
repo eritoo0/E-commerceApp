@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecommerce_app/controller/home/product_detail_controller.dart';
+import 'package:ecommerce_app/controller/home_screen/cart/cart_controller.dart';
+import 'package:ecommerce_app/controller/home_screen/home/product_detail_controller.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
-import 'package:ecommerce_app/view/screen/home/full_screen_iamge_page.dart';
+import 'package:ecommerce_app/view/screen/home_screen/home/full_screen_iamge_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -250,14 +251,31 @@ class ProductDetails extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            // ---------- Add to Cart Button ----------
+            // ---------- Add to Cart/Buy Button ----------
+            // ---------- Add to Cart / Buy Now Buttons ----------
             Obx(
               () => Row(
                 children: [
+                  // Add to Cart
                   Expanded(
                     child: ElevatedButton(
                       onPressed: controller.stock.value > 0
-                          ? controller.addToCart
+                          ? () {
+                              print(product);
+
+                              final cartCtrl =
+                                  Get.find<CartControllerImplement>();
+                              cartCtrl.addToCart(
+                                product.cast<String, dynamic>(),
+                                qty: controller
+                                    .quantity.value, // pass chosen quantity
+                              );
+                              Get.snackbar(
+                                'Added to Cart',
+                                '${controller.productName} x${controller.quantity.value}',
+                                snackPosition: SnackPosition.BOTTOM,
+                              );
+                            }
                           : null,
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -265,12 +283,14 @@ class ProductDetails extends StatelessWidget {
                         disabledBackgroundColor: Colors.grey,
                       ),
                       child: const Text(
-                        "Add to Cart",
+                        'Add to Cart',
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12), // small gap between buttons
+                  const SizedBox(width: 12),
+
+                  // Buy Now
                   Expanded(
                     child: ElevatedButton(
                       onPressed:
@@ -281,14 +301,14 @@ class ProductDetails extends StatelessWidget {
                         disabledBackgroundColor: Colors.grey,
                       ),
                       child: const Text(
-                        "Buy now",
+                        'Buy now',
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

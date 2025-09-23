@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/controller/home/products_controller.dart';
+import 'package:ecommerce_app/controller/home_screen/home/products_controller.dart';
 import 'package:ecommerce_app/view/widget/home/cateory_search_field.dart';
 import 'package:ecommerce_app/view/widget/home/home_app_bar.dart';
 import 'package:ecommerce_app/view/widget/home/products_grid.dart';

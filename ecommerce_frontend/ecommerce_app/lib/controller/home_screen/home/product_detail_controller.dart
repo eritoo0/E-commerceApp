@@ -1,7 +1,6 @@
 import 'package:ecommerce_app/linkapi.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
-import 'package:get/get_rx/get_rx.dart';
 
 abstract class ProductDetailsController extends GetxController {
   addToCart();
@@ -24,7 +23,11 @@ class ProductDetailsControllerImplement extends ProductDetailsController {
   var description = "".obs;
   bool requiresSize = true; // product['brand_requires_size']
   // from api
-  List<String> availableColors = ['Red', 'Blue', 'Black'];
+  List<String> availableColors = [
+    'Red',
+    'Blue',
+    'Black'
+  ]; // adding status and id ...
   List<String> availableSizes = ['S', 'M', 'L', 'XL'];
 
   ProductDetailsControllerImplement(this.product) {

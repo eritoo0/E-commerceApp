@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/controller/home/favorite_controller.dart';
+import 'package:ecommerce_app/controller/home_screen/favorite/favorite_controller.dart';
 import 'package:ecommerce_app/core/class/status_request.dart';
 import 'package:ecommerce_app/core/services/services.dart';
 import 'package:ecommerce_app/data/datasource/remote/home_data.dart';
@@ -50,7 +50,7 @@ class HomeControllerImplement extends HomeController {
   @override
   void onClose() {
     searchController.dispose();
-    searchController.clear();
+    //searchController.clear();
     super.onClose();
   }
 

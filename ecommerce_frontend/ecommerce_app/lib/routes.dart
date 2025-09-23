@@ -8,10 +8,12 @@ import 'package:ecommerce_app/view/screen/auth/sign_up.dart';
 import 'package:ecommerce_app/view/screen/auth/forgetpassword/verify_code.dart';
 import 'package:ecommerce_app/view/screen/auth/success_signup.dart';
 import 'package:ecommerce_app/view/screen/auth/verify_code_signup.dart';
-import 'package:ecommerce_app/view/screen/home/home.dart';
-import 'package:ecommerce_app/view/screen/home/home_screen.dart';
-import 'package:ecommerce_app/view/screen/home/product_detail.dart';
-import 'package:ecommerce_app/view/screen/home/products_page.dart';
+import 'package:ecommerce_app/view/screen/home_screen/cart/cart_screen.dart';
+import 'package:ecommerce_app/view/screen/home_screen/favorite/favorite_screen.dart';
+import 'package:ecommerce_app/view/screen/home_screen/home/home.dart';
+import 'package:ecommerce_app/view/screen/home_screen/home/home_screen.dart';
+import 'package:ecommerce_app/view/screen/home_screen/home/product_detail.dart';
+import 'package:ecommerce_app/view/screen/home_screen/home/products_page.dart';
 import 'package:ecommerce_app/view/screen/language.dart';
 import 'package:ecommerce_app/view/screen/onboarding.dart';
 import 'package:get/get.dart';
@@ -49,6 +51,11 @@ List<GetPage<dynamic>>? routes = [
     ),
   ),
   GetPage(name: AppRoute.products, page: () => const ProductsPage()),
+
+  // favortie
+  GetPage(name: AppRoute.favorite, page: () => const FavoritesScreen()),
+  //cart
+  GetPage(name: AppRoute.cart, page: () => const CartScreen()),
 ];
 
 // Map<String, Widget Function(BuildContext)> routess = {

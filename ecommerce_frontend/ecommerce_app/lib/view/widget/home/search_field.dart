@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/controller/home/home_screen_controller.dart';
+import 'package:ecommerce_app/controller/home_screen/home/home_screen_controller.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
