@@ -8,7 +8,6 @@ abstract class CartController extends GetxController {
 }
 
 class CartControllerImplement extends CartController {
-  /// { productId : { "product": productMap, "quantity": int } }
   final RxMap<int, Map<String, dynamic>> _items =
       <int, Map<String, dynamic>>{}.obs;
 
@@ -16,14 +15,17 @@ class CartControllerImplement extends CartController {
 
   @override
   void addToCart(Map<String, dynamic> product, {int qty = 1}) {
-    // id might be int or string, so normalise to int
     final int id = (product['id'] is num)
         ? (product['id'] as num).toInt()
         : int.parse(product['id'].toString());
 
     if (_items.containsKey(id)) {
       final current = (_items[id]!['quantity'] as num).toInt();
-      _items[id]!['quantity'] = current + qty;
+      // ✅ re-assign the entry so RxMap emits an update
+      _items[id] = {
+        ..._items[id]!,
+        'quantity': current + qty,
+      };
     } else {
       _items[id] = {
         'product': product,
@@ -37,7 +39,10 @@ class CartControllerImplement extends CartController {
     if (!_items.containsKey(productId)) return;
     final current = (_items[productId]!['quantity'] as num).toInt();
     if (current > 1) {
-      _items[productId]!['quantity'] = current - 1;
+      _items[productId] = {
+        ..._items[productId]!,
+        'quantity': current - 1,
+      };
     } else {
       _items.remove(productId);
     }
@@ -45,7 +50,6 @@ class CartControllerImplement extends CartController {
 
   @override
   void removeItem(int productId) => _items.remove(productId);
-
   @override
   void clearCart() => _items.clear();
 

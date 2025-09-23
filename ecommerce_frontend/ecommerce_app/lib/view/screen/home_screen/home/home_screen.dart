@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/controller/home_screen/profile/profile_screen.dart';
 import 'package:ecommerce_app/view/screen/home_screen/cart/cart_screen.dart';
 import 'package:ecommerce_app/view/screen/home_screen/favorite/favorite_screen.dart';
 import 'package:ecommerce_app/view/screen/home_screen/home/home.dart';
@@ -20,7 +21,7 @@ class HomeScreen extends StatelessWidget {
       Home(),
       FavoritesScreen(),
       CartScreen(),
-      Center(child: Text("Profile Page")),
+      ProfileScreen(),
     ];
 
     return Obx(() {
@@ -31,11 +32,13 @@ class HomeScreen extends StatelessWidget {
             ? const HomeAppBar(
                 searchWidget: SearchField(),
               )
-            : AppBar(
-                title: Text(
-                  ["Favorite", "Cart", "Profile"][index - 1],
-                ),
-              ),
+            : const PreferredSize(
+                preferredSize: Size.fromHeight(0), child: SizedBox()),
+        // : AppBar(
+        //     title: Text(
+        //       ["Favorite", "Cart", "Profile"][index - 1],
+        //     ),
+        //   ),
         body: pages[index],
         bottomNavigationBar: HomeBottomNav(
           currentIndex: index,

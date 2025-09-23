@@ -22,6 +22,9 @@ class AppRoute {
   //cart
   static const String cart = "/cart";
 
+  // profile
+  static const String profile = "/profile";
+
   //language
   static const String language = "/";
 

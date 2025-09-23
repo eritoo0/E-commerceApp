@@ -1,4 +1,6 @@
+import 'package:ecommerce_app/controller/home_screen/cart/cart_controller.dart';
 import 'package:ecommerce_app/core/constant/color.dart';
+import 'package:ecommerce_app/core/constant/routes.dart';
 
 import 'package:ecommerce_app/view/widget/home/icon_with_badge.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSize {
 
   @override
   Widget build(BuildContext context) {
+    final cartCtrl = Get.find<CartControllerImplement>();
+
     return PreferredSize(
       preferredSize: preferredSize,
       child: Container(
@@ -64,9 +68,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSize {
               // Cart icon with badge
               IconWithBadge(
                 icon: Icons.shopping_cart_outlined,
-                count: 1, // fill with real count
+                count: cartCtrl.totalItems,
                 onTap: () {
-                  // go to cart page
+                  Get.toNamed(AppRoute.cart);
                   Get.snackbar("Cart", "Open cart",
                       snackPosition: SnackPosition.TOP);
                 },

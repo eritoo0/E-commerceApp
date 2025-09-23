@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/controller/home_screen/profile/profile_screen.dart';
 import 'package:ecommerce_app/core/constant/routes.dart';
 import 'package:ecommerce_app/core/middleware/middleware.dart';
 import 'package:ecommerce_app/view/screen/auth/forgetpassword/forgetpassword.dart';
@@ -56,6 +57,8 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: AppRoute.favorite, page: () => const FavoritesScreen()),
   //cart
   GetPage(name: AppRoute.cart, page: () => const CartScreen()),
+  // profile
+  GetPage(name: AppRoute.profile, page: () => const ProfileScreen()),
 ];
 
 // Map<String, Widget Function(BuildContext)> routess = {
